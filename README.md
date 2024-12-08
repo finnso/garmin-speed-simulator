@@ -52,11 +52,11 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
-[Add your chosen license]
+MIT 
 
 ## Acknowledgments
 
-- Thanks to [Add any credits or references]
+- Thanks to Claude.ai
 - Physics calculations based on standard cycling aerodynamics models
 
 ## Support
