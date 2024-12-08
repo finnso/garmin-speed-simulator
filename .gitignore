@@ -1,0 +1,52 @@
+# Build artifacts
+/bin/
+/build/
+/releases/
+*.prg
+*.iq
+
+# Eclipse project files
+.project
+.settings/
+.buildpath
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# Garmin developer key files
+*.der
+*.pem
+*.key
+
+# Jungle files generated during build
+*.jungle.gen
+
+# Temporary files
+*.swp
+*~
+.DS_Store
+Thumbs.db
+
+# Monkey C specific
+*.fnt
+*.prg.debug.xml
+
+# Developer-specific settings
+developer_key
+developer_key.der
+developer_key.pem
+
+# Manifest backups
+manifest.xml.back
+
+# Generated resources
+resources/resources.xml.out
+resources-*/
+
+# Log files
+*.log
+
+# Unit test reports
+unittest.xml
+coverage/
