@@ -1,17 +1,13 @@
-import Toybox.Application;
-import Toybox.Graphics;
-import Toybox.WatchUi;
+using Toybox.WatchUi;
+using Toybox.Graphics;
 
-class Background extends WatchUi.DataFieldBackground {
-
+class Background extends WatchUi.DataField {
     function initialize() {
-        DataFieldBackground.initialize();
+        DataField.initialize();
     }
 
-    function draw(dc as Dc) as Void {
-        // Set background color
+    function onUpdate(dc) {
         dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_WHITE);
         dc.clear();
     }
-
-}
+}   

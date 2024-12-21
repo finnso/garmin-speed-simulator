@@ -39,8 +39,8 @@ class GarminSpeedSimulatorView extends WatchUi.DataField {
     
     function initialize() {
         DataField.initialize();
-        initializeFromProfile();
-        loadSettings();
+        //initializeFromProfile();
+        //loadSettings();
         createSpeedField();
     }
     
@@ -56,36 +56,17 @@ class GarminSpeedSimulatorView extends WatchUi.DataField {
     }
     
     // Initialize settings from Garmin profile
-    function initializeFromProfile() {
-        var profile = UserProfile.getProfile();
-        
-        // Set default values if this is first run
-        if (Properties.getValue("firstRun") == null || 
-            Properties.getValue("firstRun") == true) {
-            
-            // Get weight from profile (convert from grams to kg)
-            if (profile.weight != null) {
-                Properties.setValue("userWeight", profile.weight / 1000.0);
-            } else {
-                Properties.setValue("userWeight", 75.0);  // Default weight
-            }
-            
-            // Get height from profile (already in cm)
-            if (profile.height != null) {
-                Properties.setValue("userHeight", profile.height);
-            } else {
-                Properties.setValue("userHeight", 175.0);  // Default height
-            }
-            
-            // Set other default values
-            Properties.setValue("bikeType", "road");
-            Properties.setValue("bikeWeight", 8.0);
-            Properties.setValue("wheelset", "medium");
-            Properties.setValue("gradient", 0.0);
-            
-            Properties.setValue("firstRun", false);
-        }
+  function initializeFromProfile() {
+    if (!Application.Properties.getValue("firstRun")) {
+        Application.Properties.setValue("userWeight", 75.0);
+        Application.Properties.setValue("userHeight", 175.0);
+        Application.Properties.setValue("bikeType", "road");
+        Application.Properties.setValue("bikeWeight", 8.0);
+        Application.Properties.setValue("wheelset", "medium");
+        Application.Properties.setValue("gradient", 0.0);
+        Application.Properties.setValue("firstRun", true);
     }
+}
 
     // Periodic profile check
     function checkProfileUpdates() {

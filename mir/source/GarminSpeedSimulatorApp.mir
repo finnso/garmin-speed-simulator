@@ -1,0 +1,49 @@
+[ @file = "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorApp.mc"; @line = 1; ]
+using Toybox.Application;
+[ @file = "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorApp.mc"; @line = 2; ]
+using Toybox.WatchUi;
+[ @file = "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorApp.mc"; @line = 4; ]
+class GarminSpeedSimulatorApp extends Application.AppBase{
+    [ @file = "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorApp.mc"; @line = 4; ]
+    <init> {
+    }
+    [ @file = "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorApp.mc"; @line = 4; ]
+    static
+    <init> {
+    }
+    [ @file = "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorApp.mc"; @line = 5; ]
+    function initialize() as Void {
+_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorApp_mc_5_26_7_4_start:
+[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorApp.mc" 6 8 ]
+        %tmp.2 = getv ? :AppBase;
+        %tmp.3 = getv function %tmp.2 :initialize;
+        invoke %tmp.2 %tmp.3();
+_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorApp_mc_5_26_7_4_stop:
+    }
+    [ @file = "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorApp.mc"; @line = 9; ]
+    function getInitialView() {
+_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorApp_mc_9_30_11_4_start:
+[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorApp.mc" 10 8 ]
+        %tmp.1 = newa 1;
+        %tmp.5 = getv ? :GarminSpeedSimulatorView;
+        %tmp.2 = newc %tmp.5 ();
+        %tmp.6 = dup %tmp.1;
+        %tmp.7 = aputv %tmp.6 0 %tmp.2;
+        ret %tmp.7;
+_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorApp_mc_9_30_11_4_stop:
+    }
+}
+[ @file = "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorApp.mc"; @line = 14; ]
+function getApp() as GarminSpeedSimulatorApp {
+_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorApp_mc_14_45_16_0_start:
+[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorApp.mc" 15 4 ]
+    %tmp.1 = getm $.Toybox.Application;
+    %tmp.2 = getv function %tmp.1 :getApp;
+    %tmp.3 = invoke %tmp.1 %tmp.2();
+    %tmp.4 = as %tmp.3 GarminSpeedSimulatorApp;
+    ret %tmp.4;
+_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorApp_mc_14_45_16_0_stop:
+}
+[ @file = "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorApp.mc"; @line = 1; ]
+<init> {
+}

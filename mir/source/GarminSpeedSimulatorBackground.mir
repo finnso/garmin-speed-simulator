@@ -1,0 +1,43 @@
+[ @file = "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorBackground.mc"; @line = 1; ]
+using Toybox.WatchUi;
+[ @file = "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorBackground.mc"; @line = 2; ]
+using Toybox.Graphics;
+[ @file = "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorBackground.mc"; @line = 4; ]
+class Background extends WatchUi.DataField{
+    [ @file = "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorBackground.mc"; @line = 4; ]
+    <init> {
+    }
+    [ @file = "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorBackground.mc"; @line = 4; ]
+    static
+    <init> {
+    }
+    [ @file = "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorBackground.mc"; @line = 5; ]
+    function initialize() as Void {
+_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorBackground_mc_5_26_7_4_start:
+[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorBackground.mc" 6 8 ]
+        %tmp.2 = getv ? :DataField;
+        %tmp.3 = getv function %tmp.2 :initialize;
+        invoke %tmp.2 %tmp.3();
+_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorBackground_mc_5_26_7_4_stop:
+    }
+    [ @file = "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorBackground.mc"; @line = 9; ]
+    function onUpdate(dc) {
+_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorBackground_mc_9_26_12_4_start:
+[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorBackground.mc" 10 8 ]
+        %tmp.1 = lgetv %dc;
+        %tmp.2 = getv function %tmp.1 :setColor;
+        %tmp.3 = getm $.Toybox.Graphics;
+        %tmp.4 = getv %tmp.3 :COLOR_BLACK;
+        %tmp.5 = getm $.Toybox.Graphics;
+        %tmp.6 = getv %tmp.5 :COLOR_WHITE;
+        invoke %tmp.1 %tmp.2(%tmp.4, %tmp.6);
+[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorBackground.mc" 11 8 ]
+        %tmp.7 = lgetv %dc;
+        %tmp.8 = getv function %tmp.7 :clear;
+        invoke %tmp.7 %tmp.8();
+_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorBackground_mc_9_26_12_4_stop:
+    }
+}
+[ @file = "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorBackground.mc"; @line = 1; ]
+<init> {
+}
