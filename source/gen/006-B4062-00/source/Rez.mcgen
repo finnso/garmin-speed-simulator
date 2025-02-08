@@ -15,53 +15,53 @@ module Rez {
 
             var rez_cmp_local_var_dc_getWidth = dc.getWidth();
 
-            var rez_cmp_local_custom_drawable_92614618092833442318 = new Background();
+            var rez_cmp_local_custom_drawable_43692620524024026493 = new Background();
 
             var rez_cmp_local_text_label = new WatchUi.Text({:identifier=>"label", :color=>Graphics.COLOR_LT_GRAY, :locX=>(rez_cmp_local_var_dc_getWidth * 0.5), :locY=>((rez_cmp_local_var_dc_getHeight - dc.getFontHeight(Graphics.FONT_TINY)) * 0.5), :justification=>Graphics.TEXT_JUSTIFY_CENTER, :font=>Graphics.FONT_TINY});
 
             var rez_cmp_local_text_value = new WatchUi.Text({:identifier=>"value", :color=>Graphics.COLOR_WHITE, :locX=>(rez_cmp_local_var_dc_getWidth * 0.5), :locY=>((rez_cmp_local_var_dc_getHeight - dc.getFontHeight(Graphics.FONT_LARGE)) * 0.5), :justification=>Graphics.TEXT_JUSTIFY_CENTER, :font=>Graphics.FONT_LARGE});
 
-            return [rez_cmp_local_custom_drawable_92614618092833442318, rez_cmp_local_text_label, rez_cmp_local_text_value] as Array<WatchUi.Drawable>;
+            return [rez_cmp_local_custom_drawable_43692620524024026493, rez_cmp_local_text_label, rez_cmp_local_text_value] as Array<WatchUi.Drawable>;
         }
 
         function TopLeftLayout(dc as Graphics.Dc) as Array<WatchUi.Drawable> {
-            var rez_cmp_local_custom_drawable_11065509201753159180 = new Background();
+            var rez_cmp_local_custom_drawable_76984258126096008372 = new Background();
 
             var rez_cmp_local_text_label = new WatchUi.Text({:identifier=>"label", :color=>Graphics.COLOR_LT_GRAY, :locX=>95, :locY=>75, :justification=>Graphics.TEXT_JUSTIFY_RIGHT, :font=>Graphics.FONT_TINY});
 
             var rez_cmp_local_text_value = new WatchUi.Text({:identifier=>"value", :color=>Graphics.COLOR_WHITE, :locX=>95, :locY=>42, :justification=>Graphics.TEXT_JUSTIFY_RIGHT, :font=>Graphics.FONT_LARGE});
 
-            return [rez_cmp_local_custom_drawable_11065509201753159180, rez_cmp_local_text_label, rez_cmp_local_text_value] as Array<WatchUi.Drawable>;
+            return [rez_cmp_local_custom_drawable_76984258126096008372, rez_cmp_local_text_label, rez_cmp_local_text_value] as Array<WatchUi.Drawable>;
         }
 
         function TopRightLayout(dc as Graphics.Dc) as Array<WatchUi.Drawable> {
-            var rez_cmp_local_custom_drawable_15846150701238983506 = new Background();
+            var rez_cmp_local_custom_drawable_54343890616260995871 = new Background();
 
             var rez_cmp_local_text_label = new WatchUi.Text({:identifier=>"label", :color=>Graphics.COLOR_LT_GRAY, :locX=>14, :locY=>75, :justification=>Graphics.TEXT_JUSTIFY_LEFT, :font=>Graphics.FONT_TINY});
 
             var rez_cmp_local_text_value = new WatchUi.Text({:identifier=>"value", :color=>Graphics.COLOR_WHITE, :locX=>14, :locY=>42, :justification=>Graphics.TEXT_JUSTIFY_LEFT, :font=>Graphics.FONT_LARGE});
 
-            return [rez_cmp_local_custom_drawable_15846150701238983506, rez_cmp_local_text_label, rez_cmp_local_text_value] as Array<WatchUi.Drawable>;
+            return [rez_cmp_local_custom_drawable_54343890616260995871, rez_cmp_local_text_label, rez_cmp_local_text_value] as Array<WatchUi.Drawable>;
         }
 
         function BottomLeftLayout(dc as Graphics.Dc) as Array<WatchUi.Drawable> {
-            var rez_cmp_local_custom_drawable_13513660651147676960 = new Background();
+            var rez_cmp_local_custom_drawable_10273301221834572554 = new Background();
 
             var rez_cmp_local_text_label = new WatchUi.Text({:identifier=>"label", :color=>Graphics.COLOR_LT_GRAY, :locX=>95, :locY=>10, :justification=>Graphics.TEXT_JUSTIFY_RIGHT, :font=>Graphics.FONT_TINY});
 
             var rez_cmp_local_text_value = new WatchUi.Text({:identifier=>"value", :color=>Graphics.COLOR_WHITE, :locX=>95, :locY=>27, :justification=>Graphics.TEXT_JUSTIFY_RIGHT, :font=>Graphics.FONT_LARGE});
 
-            return [rez_cmp_local_custom_drawable_13513660651147676960, rez_cmp_local_text_label, rez_cmp_local_text_value] as Array<WatchUi.Drawable>;
+            return [rez_cmp_local_custom_drawable_10273301221834572554, rez_cmp_local_text_label, rez_cmp_local_text_value] as Array<WatchUi.Drawable>;
         }
 
         function BottomRightLayout(dc as Graphics.Dc) as Array<WatchUi.Drawable> {
-            var rez_cmp_local_custom_drawable_20651694231599982112 = new Background();
+            var rez_cmp_local_custom_drawable_13288836625387808629 = new Background();
 
             var rez_cmp_local_text_label = new WatchUi.Text({:identifier=>"label", :color=>Graphics.COLOR_LT_GRAY, :locX=>14, :locY=>10, :justification=>Graphics.TEXT_JUSTIFY_LEFT, :font=>Graphics.FONT_TINY});
 
             var rez_cmp_local_text_value = new WatchUi.Text({:identifier=>"value", :color=>Graphics.COLOR_WHITE, :locX=>14, :locY=>27, :justification=>Graphics.TEXT_JUSTIFY_LEFT, :font=>Graphics.FONT_LARGE});
 
-            return [rez_cmp_local_custom_drawable_20651694231599982112, rez_cmp_local_text_label, rez_cmp_local_text_value] as Array<WatchUi.Drawable>;
+            return [rez_cmp_local_custom_drawable_13288836625387808629, rez_cmp_local_text_label, rez_cmp_local_text_value] as Array<WatchUi.Drawable>;
         }
     } // Layouts
 
@@ -93,14 +93,14 @@ module Rez {
         } // prompt_loc__body_no_title
 
         module system_icon_dark__about {
-            const filename as String = "/Users/finnur/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/system_icon_dark__about.svg";
+            const filename as String = "/Users/finnurerlingsson/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/system_icon_dark__about.svg";
             const disableTransparency as Boolean = true;
             const dithering as String = "none";
             const automaticPalette as Boolean = true;
         } // system_icon_dark__about
 
         module system_icon_light__question {
-            const filename as String = "/Users/finnur/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/system_icon_light__question.svg";
+            const filename as String = "/Users/finnurerlingsson/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/system_icon_light__question.svg";
             const disableTransparency as Boolean = true;
             const dithering as String = "none";
             const automaticPalette as Boolean = true;
@@ -115,7 +115,7 @@ module Rez {
         } // prompt_font__title
 
         module system_icon_dark__discard {
-            const filename as String = "/Users/finnur/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/system_icon_dark__discard.svg";
+            const filename as String = "/Users/finnurerlingsson/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/system_icon_dark__discard.svg";
             const disableTransparency as Boolean = true;
             const dithering as String = "none";
             const automaticPalette as Boolean = true;
@@ -132,7 +132,7 @@ module Rez {
         } // system_color_dark__text
 
         module system_icon_destructive__discard {
-            const filename as String = "/Users/finnur/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/system_icon_destructive__discard.svg";
+            const filename as String = "/Users/finnurerlingsson/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/system_icon_destructive__discard.svg";
             const disableTransparency as Boolean = true;
             const dithering as String = "none";
             const automaticPalette as Boolean = true;
@@ -198,7 +198,7 @@ module Rez {
         } // system_loc__hint_action_menu
 
         module confirmation_icon__hint_confirm {
-            const filename as String = "/Users/finnur/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/confirmation_icon__hint_completion.svg";
+            const filename as String = "/Users/finnurerlingsson/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/confirmation_icon__hint_completion.svg";
             const disableTransparency as Boolean = true;
             const dithering as String = "none";
             const automaticPalette as Boolean = true;
@@ -235,7 +235,7 @@ module Rez {
         } // system_input__action_menu
 
         module system_icon_light__save {
-            const filename as String = "/Users/finnur/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/system_icon_light__save.svg";
+            const filename as String = "/Users/finnurerlingsson/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/system_icon_light__save.svg";
             const disableTransparency as Boolean = true;
             const dithering as String = "none";
             const automaticPalette as Boolean = true;
@@ -251,7 +251,7 @@ module Rez {
         } // system_loc__subwindow
 
         module system_icon_light__warning {
-            const filename as String = "/Users/finnur/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/system_icon_light__warning.svg";
+            const filename as String = "/Users/finnurerlingsson/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/system_icon_light__warning.svg";
             const disableTransparency as Boolean = true;
             const dithering as String = "none";
             const automaticPalette as Boolean = true;
@@ -263,7 +263,7 @@ module Rez {
         } // confirmation_color_light__body
 
         module confirmation_icon_light__hint_keep {
-            const filename as String = "/Users/finnur/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/confirmation_icon__hint_completion.svg";
+            const filename as String = "/Users/finnurerlingsson/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/confirmation_icon__hint_completion.svg";
             const disableTransparency as Boolean = false;
             const dithering as String = "none";
             const automaticPalette as Boolean = true;
@@ -318,7 +318,7 @@ module Rez {
         } // prompt_loc__body_with_title
 
         module system_icon_dark__search {
-            const filename as String = "/Users/finnur/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/system_icon_dark__search.svg";
+            const filename as String = "/Users/finnurerlingsson/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/system_icon_dark__search.svg";
             const disableTransparency as Boolean = true;
             const dithering as String = "none";
             const automaticPalette as Boolean = true;
@@ -330,14 +330,14 @@ module Rez {
         } // activity_color_light__text
 
         module confirmation_icon__hint_keep {
-            const filename as String = "/Users/finnur/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/confirmation_icon__hint_completion.svg";
+            const filename as String = "/Users/finnurerlingsson/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/confirmation_icon__hint_completion.svg";
             const disableTransparency as Boolean = false;
             const dithering as String = "none";
             const automaticPalette as Boolean = true;
         } // confirmation_icon__hint_keep
 
         module system_icon_dark__save {
-            const filename as String = "/Users/finnur/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/system_icon_dark__save.svg";
+            const filename as String = "/Users/finnurerlingsson/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/system_icon_dark__save.svg";
             const disableTransparency as Boolean = true;
             const dithering as String = "none";
             const automaticPalette as Boolean = true;
@@ -348,7 +348,7 @@ module Rez {
         } // system_icon_destructive__hint_button_left_middle
 
         module system_icon_light__search {
-            const filename as String = "/Users/finnur/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/system_icon_light__search.svg";
+            const filename as String = "/Users/finnurerlingsson/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/system_icon_light__search.svg";
             const disableTransparency as Boolean = true;
             const dithering as String = "none";
             const automaticPalette as Boolean = true;
@@ -367,7 +367,7 @@ module Rez {
         } // system_loc__hint_button_right_bottom
 
         module confirmation_icon_dark__hint_reject {
-            const filename as String = "/Users/finnur/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/confirmation_icon__hint_x.svg";
+            const filename as String = "/Users/finnurerlingsson/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/confirmation_icon__hint_x.svg";
             const disableTransparency as Boolean = true;
             const dithering as String = "none";
             const automaticPalette as Boolean = true;
@@ -379,7 +379,7 @@ module Rez {
         } // confirmation_color_dark__body
 
         module confirmation_icon_light__hint_confirm {
-            const filename as String = "/Users/finnur/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/confirmation_icon__hint_completion.svg";
+            const filename as String = "/Users/finnurerlingsson/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/confirmation_icon__hint_completion.svg";
             const disableTransparency as Boolean = true;
             const dithering as String = "none";
             const automaticPalette as Boolean = true;
@@ -391,7 +391,7 @@ module Rez {
         } // prompt_color_dark__title
 
         module system_icon_destructive__cancel {
-            const filename as String = "/Users/finnur/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/system_icon_destructive__cancel.svg";
+            const filename as String = "/Users/finnurerlingsson/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/system_icon_destructive__cancel.svg";
             const disableTransparency as Boolean = true;
             const dithering as String = "none";
             const automaticPalette as Boolean = true;
@@ -423,28 +423,28 @@ module Rez {
         } // system_icon_dark__hint_button_left_middle
 
         module confirmation_icon_dark__hint_keep {
-            const filename as String = "/Users/finnur/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/confirmation_icon__hint_completion.svg";
+            const filename as String = "/Users/finnurerlingsson/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/confirmation_icon__hint_completion.svg";
             const disableTransparency as Boolean = false;
             const dithering as String = "none";
             const automaticPalette as Boolean = true;
         } // confirmation_icon_dark__hint_keep
 
         module system_icon_light__cancel {
-            const filename as String = "/Users/finnur/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/system_icon_light__cancel.svg";
+            const filename as String = "/Users/finnurerlingsson/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/system_icon_light__cancel.svg";
             const disableTransparency as Boolean = true;
             const dithering as String = "none";
             const automaticPalette as Boolean = true;
         } // system_icon_light__cancel
 
         module confirmation_icon_light__hint_reject {
-            const filename as String = "/Users/finnur/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/confirmation_icon__hint_x.svg";
+            const filename as String = "/Users/finnurerlingsson/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/confirmation_icon__hint_x.svg";
             const disableTransparency as Boolean = true;
             const dithering as String = "none";
             const automaticPalette as Boolean = true;
         } // confirmation_icon_light__hint_reject
 
         module system_icon_light__about {
-            const filename as String = "/Users/finnur/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/system_icon_light__about.svg";
+            const filename as String = "/Users/finnurerlingsson/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/system_icon_light__about.svg";
             const disableTransparency as Boolean = true;
             const dithering as String = "none";
             const automaticPalette as Boolean = true;
@@ -461,7 +461,7 @@ module Rez {
         } // system_icon_dark__hint_button_right_middle
 
         module confirmation_icon__hint_reject {
-            const filename as String = "/Users/finnur/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/confirmation_icon__hint_x.svg";
+            const filename as String = "/Users/finnurerlingsson/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/confirmation_icon__hint_x.svg";
             const disableTransparency as Boolean = true;
             const dithering as String = "none";
             const automaticPalette as Boolean = true;
@@ -487,7 +487,7 @@ module Rez {
         } // confirmation_loc__hint_reject
 
         module confirmation_icon_dark__hint_delete {
-            const filename as String = "/Users/finnur/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/confirmation_icon__hint_back.svg";
+            const filename as String = "/Users/finnurerlingsson/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/confirmation_icon__hint_back.svg";
             const disableTransparency as Boolean = true;
             const dithering as String = "none";
             const automaticPalette as Boolean = true;
@@ -513,7 +513,7 @@ module Rez {
         } // system_size__menu_icon
 
         module system_icon_destructive__warning {
-            const filename as String = "/Users/finnur/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/system_icon_destructive__warning.svg";
+            const filename as String = "/Users/finnurerlingsson/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/system_icon_destructive__warning.svg";
             const disableTransparency as Boolean = true;
             const dithering as String = "none";
             const automaticPalette as Boolean = true;
@@ -524,7 +524,7 @@ module Rez {
         } // system_loc__hint_button_right_middle
 
         module system_icon_dark__cancel {
-            const filename as String = "/Users/finnur/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/system_icon_dark__cancel.svg";
+            const filename as String = "/Users/finnurerlingsson/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/system_icon_dark__cancel.svg";
             const disableTransparency as Boolean = true;
             const dithering as String = "none";
             const automaticPalette as Boolean = true;
@@ -545,7 +545,7 @@ module Rez {
         } // system_color_light__text
 
         module system_icon_light__check {
-            const filename as String = "/Users/finnur/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/system_icon_light__check.svg";
+            const filename as String = "/Users/finnurerlingsson/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/system_icon_light__check.svg";
             const disableTransparency as Boolean = true;
             const dithering as String = "none";
             const automaticPalette as Boolean = true;
@@ -556,7 +556,7 @@ module Rez {
         } // confirmation_input__reject
 
         module system_icon_light__revert {
-            const filename as String = "/Users/finnur/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/system_icon_light__revert.svg";
+            const filename as String = "/Users/finnurerlingsson/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/system_icon_light__revert.svg";
             const disableTransparency as Boolean = true;
             const dithering as String = "none";
             const automaticPalette as Boolean = true;
@@ -571,7 +571,7 @@ module Rez {
         } // system_icon_positive__hint_button_left_bottom
 
         module system_icon_dark__check {
-            const filename as String = "/Users/finnur/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/system_icon_dark__check.svg";
+            const filename as String = "/Users/finnurerlingsson/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/system_icon_dark__check.svg";
             const disableTransparency as Boolean = true;
             const dithering as String = "none";
             const automaticPalette as Boolean = true;
@@ -612,28 +612,28 @@ module Rez {
         } // system_icon_positive__hint_button_right_bottom
 
         module system_icon_dark__revert {
-            const filename as String = "/Users/finnur/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/system_icon_dark__revert.svg";
+            const filename as String = "/Users/finnurerlingsson/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/system_icon_dark__revert.svg";
             const disableTransparency as Boolean = true;
             const dithering as String = "none";
             const automaticPalette as Boolean = true;
         } // system_icon_dark__revert
 
         module confirmation_icon_light__hint_delete {
-            const filename as String = "/Users/finnur/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/confirmation_icon__hint_back.svg";
+            const filename as String = "/Users/finnurerlingsson/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/confirmation_icon__hint_back.svg";
             const disableTransparency as Boolean = true;
             const dithering as String = "none";
             const automaticPalette as Boolean = true;
         } // confirmation_icon_light__hint_delete
 
         module system_icon_dark__question {
-            const filename as String = "/Users/finnur/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/system_icon_dark__question.svg";
+            const filename as String = "/Users/finnurerlingsson/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/system_icon_dark__question.svg";
             const disableTransparency as Boolean = true;
             const dithering as String = "none";
             const automaticPalette as Boolean = true;
         } // system_icon_dark__question
 
         module system_icon_light__discard {
-            const filename as String = "/Users/finnur/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/system_icon_light__discard.svg";
+            const filename as String = "/Users/finnurerlingsson/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/system_icon_light__discard.svg";
             const disableTransparency as Boolean = true;
             const dithering as String = "none";
             const automaticPalette as Boolean = true;
@@ -650,7 +650,7 @@ module Rez {
         } // device_info
 
         module confirmation_icon_dark__hint_confirm {
-            const filename as String = "/Users/finnur/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/confirmation_icon__hint_completion.svg";
+            const filename as String = "/Users/finnurerlingsson/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/confirmation_icon__hint_completion.svg";
             const disableTransparency as Boolean = true;
             const dithering as String = "none";
             const automaticPalette as Boolean = true;
@@ -668,7 +668,7 @@ module Rez {
         } // prompt_size__title_icon
 
         module system_icon_dark__warning {
-            const filename as String = "/Users/finnur/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/system_icon_dark__warning.svg";
+            const filename as String = "/Users/finnurerlingsson/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/system_icon_dark__warning.svg";
             const disableTransparency as Boolean = true;
             const dithering as String = "none";
             const automaticPalette as Boolean = true;
@@ -691,7 +691,7 @@ module Rez {
         } // prompt_color_dark__body
 
         module confirmation_icon__hint_delete {
-            const filename as String = "/Users/finnur/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/confirmation_icon__hint_back.svg";
+            const filename as String = "/Users/finnurerlingsson/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/confirmation_icon__hint_back.svg";
             const disableTransparency as Boolean = true;
             const dithering as String = "none";
             const automaticPalette as Boolean = true;
@@ -707,7 +707,7 @@ module Rez {
         } // confirmation_size__body
 
         module system_icon_positive__check {
-            const filename as String = "/Users/finnur/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/system_icon_positive__check.svg";
+            const filename as String = "/Users/finnurerlingsson/Library/Application Support/Garmin/ConnectIQ/Devices/edge840/system_icon_positive__check.svg";
             const disableTransparency as Boolean = true;
             const dithering as String = "none";
             const automaticPalette as Boolean = true;

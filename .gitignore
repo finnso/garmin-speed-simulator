@@ -2,13 +2,12 @@
 /bin/
 /build/
 /releases/
+
+# Generated source files
+/source/gen/
+/source/internal-mir/
 *.prg
 *.iq
-
-# Eclipse project files
-.project
-.settings/
-.buildpath
 
 # Visual Studio Code
 .vscode/
@@ -31,22 +30,42 @@ Thumbs.db
 # Monkey C specific
 *.fnt
 *.prg.debug.xml
+*.mc.temp
+*.mcgen
+*.debug
+*.d
 
 # Developer-specific settings
 developer_key
 developer_key.der
 developer_key.pem
+settings.json
 
 # Manifest backups
 manifest.xml.back
+*.xml.bak
 
 # Generated resources
 resources/resources.xml.out
 resources-*/
+/drawables-*/
+/layouts-*/
+/strings-*/
 
 # Log files
 *.log
+simulator.log
 
 # Unit test reports
 unittest.xml
 coverage/
+test-results/
+
+# Local configuration
+local.properties
+/local/
+
+# Backup files
+*.bak
+*.backup
+*.old

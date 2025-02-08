@@ -1,32 +1,36 @@
-[ @file = "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 1; ]
+[ @file = "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 1; ]
 using Toybox.WatchUi;
-[ @file = "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 2; ]
+[ @file = "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 2; ]
 using Toybox.System;
-[ @file = "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 3; ]
+[ @file = "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 3; ]
+using Toybox.Graphics;
+[ @file = "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 4; ]
 using Toybox.Sensor;
-[ @file = "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 4; ]
+[ @file = "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 5; ]
 using Toybox.Math;
-[ @file = "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 5; ]
+[ @file = "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 6; ]
 using Toybox.Application.Properties;
-[ @file = "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 6; ]
+[ @file = "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 7; ]
 using Toybox.UserProfile;
-[ @file = "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 7; ]
+[ @file = "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 8; ]
 using Toybox.FitContributor;
-[ @file = "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 8; ]
-using Toybox.ActivityRecording;
-[ @file = "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 11; @position = 6; ]
+[ @file = "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 9; ]
+using Toybox.Activity;
+[ @file = "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 12; @position = 6; ]
 const GRAVITY = 9.81;
-[ @file = "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 12; @position = 6; ]
+[ @file = "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 13; @position = 6; ]
 const AIR_DENSITY = 1.225;
-[ @file = "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 13; @position = 6; ]
+[ @file = "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 14; @position = 6; ]
 const ROLLING_COEFFICIENT = 0.004;
-[ @file = "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 14; @position = 6; ]
-const FIT_SPEED_FIELD_ID = 0;
-[ @file = "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 16; ]
+[ @file = "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 15; @position = 6; ]
+const FIT_SPEED_FIELD_ID = 6;
+[ @file = "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 18; @position = 6; ]
+const SPEED_NATIVE_NUM = 6;
+[ @file = "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 21; ]
 class GarminSpeedSimulatorView extends WatchUi.DataField{
-    [ @file = "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 16; ]
+    [ @file = "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 21; ]
     <init> {
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 22 8 ]
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 28 8 ]
         %tmp.1 = newd 3;
         %tmp.2 = "road";
         %tmp.3 = newd 3;
@@ -78,157 +82,285 @@ class GarminSpeedSimulatorView extends WatchUi.DataField{
         %tmp.49 = aputv %tmp.48 %tmp.34 %tmp.47;
         putv self :bikeProfiles %tmp.49;
     }
-    [ @file = "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 16; ]
+    [ @file = "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 21; ]
     static
     <init> {
     }
-    [ @file = "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 17; @position = 8; ]
+    [ @file = "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 22; @position = 8; ]
     var currentSpeed = 0.0f;
-    [ @file = "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 18; @position = 8; ]
+    [ @file = "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 23; @position = 8; ]
     var settings;
-    [ @file = "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 19; @position = 8; ]
+    [ @file = "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 24; @position = 8; ]
     var speedField;
-    [ @file = "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 22; @position = 8; ]
+    [ @file = "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 25; @position = 8; ]
+    var session;
+    [ @file = "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 28; @position = 8; ]
     var bikeProfiles;
-    [ @file = "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 40; ]
+    [ @file = "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 46; ]
     function initialize() as Void {
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_40_26_45_4_start:
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 41 8 ]
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_46_26_51_4_start:
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 47 8 ]
         %tmp.2 = getv ? :DataField;
         %tmp.3 = getv function %tmp.2 :initialize;
         invoke %tmp.2 %tmp.3();
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 44 8 ]
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 48 8 ]
         %tmp.4 = self;
-        %tmp.5 = getv function %tmp.4 :createSpeedField;
+        %tmp.5 = getv function %tmp.4 :initializeFromProfile;
         invoke %tmp.4 %tmp.5();
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_40_26_45_4_stop:
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 49 8 ]
+        %tmp.6 = self;
+        %tmp.7 = getv function %tmp.6 :loadSettings;
+        invoke %tmp.6 %tmp.7();
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 50 8 ]
+        %tmp.8 = self;
+        %tmp.9 = getv function %tmp.8 :createSpeedField;
+        invoke %tmp.8 %tmp.9();
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_46_26_51_4_stop:
     }
-    [ @file = "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 48; ]
+    [ @file = "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 53; ]
+    function onUpdate(dc) {
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_53_27_83_4_start:
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 55 8 ]
+        %tmp.1 = lgetv %dc;
+        %tmp.2 = getv function %tmp.1 :setColor;
+        %tmp.3 = getm $.Toybox.Graphics;
+        %tmp.4 = getv %tmp.3 :COLOR_BLACK;
+        %tmp.5 = getm $.Toybox.Graphics;
+        %tmp.6 = getv %tmp.5 :COLOR_WHITE;
+        invoke %tmp.1 %tmp.2(%tmp.4, %tmp.6);
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 56 8 ]
+        %tmp.7 = lgetv %dc;
+        %tmp.8 = getv function %tmp.7 :clear;
+        invoke %tmp.7 %tmp.8();
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 59 8 ]
+        %tmp.9 = lgetv %dc;
+        %tmp.10 = getv function %tmp.9 :setColor;
+        %tmp.11 = getm $.Toybox.Graphics;
+        %tmp.12 = getv %tmp.11 :COLOR_BLACK;
+        %tmp.13 = getm $.Toybox.Graphics;
+        %tmp.14 = getv %tmp.13 :COLOR_TRANSPARENT;
+        invoke %tmp.9 %tmp.10(%tmp.12, %tmp.14);
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 62 8 ]
+        [ "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_53_27_83_4_start" "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_53_27_83_4_stop" ]
+        %width.1 = local;
+        %tmp.15 = lgetv %dc;
+        %tmp.16 = getv function %tmp.15 :getWidth;
+        %tmp.17 = invoke %tmp.15 %tmp.16();
+        lputv %width.1 %tmp.17;
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 63 8 ]
+        [ "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_53_27_83_4_start" "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_53_27_83_4_stop" ]
+        %height.2 = local;
+        %tmp.18 = lgetv %dc;
+        %tmp.19 = getv function %tmp.18 :getHeight;
+        %tmp.20 = invoke %tmp.18 %tmp.19();
+        lputv %height.2 %tmp.20;
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 66 8 ]
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_66_8_82_8_if_stmt:
+        %tmp.22 = getv ? :currentSpeed;
+        %tmp.23 = null;
+        %tmp.24 = ne %tmp.22 %tmp.23;
+        bf %tmp.24 @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_66_8_82_8_if_false;
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_66_8_82_8_if_true:
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_66_34_74_8_start:
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 67 12 ]
+        %tmp.25 = lgetv %dc;
+        %tmp.26 = getv function %tmp.25 :drawText;
+        %tmp.28 = lgetv %width.1;
+        %tmp.29 = 2;
+        %tmp.30 = div %tmp.28 %tmp.29;
+        %tmp.32 = lgetv %height.2;
+        %tmp.33 = 2;
+        %tmp.34 = div %tmp.32 %tmp.33;
+        %tmp.35 = getm $.Toybox.Graphics;
+        %tmp.36 = getv %tmp.35 :FONT_LARGE;
+        %tmp.38 = getv ? :currentSpeed;
+        %tmp.39 = as %tmp.38 { (!Null) };
+        %tmp.40 = getv function %tmp.39 :format;
+        %tmp.41 = "%.1f";
+        %tmp.42 = invoke %tmp.39 %tmp.40(%tmp.41);
+        %tmp.43 = getm $.Toybox.Graphics;
+        %tmp.44 = getv %tmp.43 :TEXT_JUSTIFY_CENTER;
+        invoke %tmp.25 %tmp.26(%tmp.30, %tmp.34, %tmp.36, %tmp.42, %tmp.44);
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_66_34_74_8_stop:
+        goto @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_66_8_82_8_if_end;
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_66_8_82_8_if_false:
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_74_15_82_8_start:
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 75 12 ]
+        %tmp.45 = lgetv %dc;
+        %tmp.46 = getv function %tmp.45 :drawText;
+        %tmp.48 = lgetv %width.1;
+        %tmp.49 = 2;
+        %tmp.50 = div %tmp.48 %tmp.49;
+        %tmp.52 = lgetv %height.2;
+        %tmp.53 = 2;
+        %tmp.54 = div %tmp.52 %tmp.53;
+        %tmp.55 = getm $.Toybox.Graphics;
+        %tmp.56 = getv %tmp.55 :FONT_LARGE;
+        %tmp.57 = "--";
+        %tmp.58 = getm $.Toybox.Graphics;
+        %tmp.59 = getv %tmp.58 :TEXT_JUSTIFY_CENTER;
+        invoke %tmp.45 %tmp.46(%tmp.50, %tmp.54, %tmp.56, %tmp.57, %tmp.59);
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_74_15_82_8_stop:
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_66_8_82_8_if_end:
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_53_27_83_4_stop:
+    }
+    [ @file = "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 86; ]
     function createSpeedField() {
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_48_32_56_4_start:
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 49 8 ]
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_86_32_103_4_start:
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 88 8 ]
         %tmp.1 = self;
         %tmp.2 = getv function %tmp.1 :createField;
-        %tmp.3 = "computed_speed";
-        %tmp.5 = getv ? :FIT_SPEED_FIELD_ID;
-        %tmp.6 = getm $.Toybox.FitContributor;
-        %tmp.7 = getv %tmp.6 :DATA_TYPE_FLOAT;
-        %tmp.8 = newd 2;
-        %tmp.10 = const :mesgType;
-        %tmp.11 = getm $.Toybox.FitContributor;
-        %tmp.12 = getv %tmp.11 :MESG_TYPE_RECORD;
-        %tmp.13 = dup %tmp.8;
-        %tmp.14 = aputv %tmp.13 %tmp.10 %tmp.12;
-        %tmp.16 = const :units;
-        %tmp.17 = "m/s";
-        %tmp.18 = dup %tmp.14;
-        %tmp.19 = aputv %tmp.18 %tmp.16 %tmp.17;
-        %tmp.20 = invoke %tmp.1 %tmp.2(%tmp.3, %tmp.5, %tmp.7, %tmp.19);
-        putv self :speedField %tmp.20;
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_48_32_56_4_stop:
+        %tmp.3 = "speed";
+        %tmp.4 = 0;
+        %tmp.5 = getm $.Toybox.FitContributor;
+        %tmp.6 = getv %tmp.5 :DATA_TYPE_FLOAT;
+        %tmp.7 = newd 3;
+        %tmp.9 = const :mesgType;
+        %tmp.10 = getm $.Toybox.FitContributor;
+        %tmp.11 = getv %tmp.10 :MESG_TYPE_RECORD;
+        %tmp.12 = dup %tmp.7;
+        %tmp.13 = aputv %tmp.12 %tmp.9 %tmp.11;
+        %tmp.15 = const :units;
+        %tmp.16 = "m/s";
+        %tmp.17 = dup %tmp.13;
+        %tmp.18 = aputv %tmp.17 %tmp.15 %tmp.16;
+        %tmp.20 = const :nativeNum;
+        %tmp.22 = getv ? :SPEED_NATIVE_NUM;
+        %tmp.23 = dup %tmp.18;
+        %tmp.24 = aputv %tmp.23 %tmp.20 %tmp.22;
+        %tmp.25 = invoke %tmp.1 %tmp.2(%tmp.3, %tmp.4, %tmp.6, %tmp.24);
+        putv self :speedField %tmp.25;
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_86_32_103_4_stop:
     }
-    [ @file = "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 59; ]
+    [ @file = "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 106; ]
     function initializeFromProfile() {
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_59_35_69_0_start:
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 60 4 ]
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_60_4_68_4_if_stmt:
-        %tmp.2 = getv ? :Application;
-        %tmp.3 = getv %tmp.2 :Properties;
-        %tmp.4 = getv function %tmp.3 :getValue;
-        %tmp.5 = "firstRun";
-        %tmp.6 = invoke %tmp.3 %tmp.4(%tmp.5);
-        %tmp.7 = not %tmp.6;
-        bf %tmp.7 @_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_60_4_68_4_if_end;
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_60_4_68_4_if_true:
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_60_54_68_4_start:
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 61 8 ]
-        %tmp.9 = getv ? :Application;
-        %tmp.10 = getv %tmp.9 :Properties;
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_106_35_120_0_start:
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 107 4 ]
+        try @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_107_4_119_4_beginTry @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_107_4_119_4_endTry @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_107_4_119_4_catch @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_107_4_119_4_finally;
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_107_4_119_4_beginTry:
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_107_8_117_4_start:
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 108 8 ]
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_108_8_116_8_if_stmt:
+        %tmp.1 = getm $.Toybox.Application.Properties;
+        %tmp.2 = getv function %tmp.1 :getValue;
+        %tmp.3 = "firstRun";
+        %tmp.4 = invoke %tmp.1 %tmp.2(%tmp.3);
+        %tmp.5 = not %tmp.4;
+        bf %tmp.5 @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_108_8_116_8_if_end;
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_108_8_116_8_if_true:
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_108_46_116_8_start:
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 109 12 ]
+        %tmp.6 = getm $.Toybox.Application.Properties;
+        %tmp.7 = getv function %tmp.6 :setValue;
+        %tmp.8 = "userWeight";
+        %tmp.9 = 75.0;
+        invoke %tmp.6 %tmp.7(%tmp.8, %tmp.9);
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 110 12 ]
+        %tmp.10 = getm $.Toybox.Application.Properties;
         %tmp.11 = getv function %tmp.10 :setValue;
-        %tmp.12 = "userWeight";
-        %tmp.13 = 75.0;
+        %tmp.12 = "userHeight";
+        %tmp.13 = 175.0;
         invoke %tmp.10 %tmp.11(%tmp.12, %tmp.13);
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 62 8 ]
-        %tmp.15 = getv ? :Application;
-        %tmp.16 = getv %tmp.15 :Properties;
-        %tmp.17 = getv function %tmp.16 :setValue;
-        %tmp.18 = "userHeight";
-        %tmp.19 = 175.0;
-        invoke %tmp.16 %tmp.17(%tmp.18, %tmp.19);
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 63 8 ]
-        %tmp.21 = getv ? :Application;
-        %tmp.22 = getv %tmp.21 :Properties;
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 111 12 ]
+        %tmp.14 = getm $.Toybox.Application.Properties;
+        %tmp.15 = getv function %tmp.14 :setValue;
+        %tmp.16 = "bikeType";
+        %tmp.17 = "road";
+        invoke %tmp.14 %tmp.15(%tmp.16, %tmp.17);
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 112 12 ]
+        %tmp.18 = getm $.Toybox.Application.Properties;
+        %tmp.19 = getv function %tmp.18 :setValue;
+        %tmp.20 = "bikeWeight";
+        %tmp.21 = 8.0;
+        invoke %tmp.18 %tmp.19(%tmp.20, %tmp.21);
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 113 12 ]
+        %tmp.22 = getm $.Toybox.Application.Properties;
         %tmp.23 = getv function %tmp.22 :setValue;
-        %tmp.24 = "bikeType";
-        %tmp.25 = "road";
+        %tmp.24 = "wheelset";
+        %tmp.25 = "medium";
         invoke %tmp.22 %tmp.23(%tmp.24, %tmp.25);
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 64 8 ]
-        %tmp.27 = getv ? :Application;
-        %tmp.28 = getv %tmp.27 :Properties;
-        %tmp.29 = getv function %tmp.28 :setValue;
-        %tmp.30 = "bikeWeight";
-        %tmp.31 = 8.0;
-        invoke %tmp.28 %tmp.29(%tmp.30, %tmp.31);
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 65 8 ]
-        %tmp.33 = getv ? :Application;
-        %tmp.34 = getv %tmp.33 :Properties;
-        %tmp.35 = getv function %tmp.34 :setValue;
-        %tmp.36 = "wheelset";
-        %tmp.37 = "medium";
-        invoke %tmp.34 %tmp.35(%tmp.36, %tmp.37);
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 66 8 ]
-        %tmp.39 = getv ? :Application;
-        %tmp.40 = getv %tmp.39 :Properties;
-        %tmp.41 = getv function %tmp.40 :setValue;
-        %tmp.42 = "gradient";
-        %tmp.43 = 0.0;
-        invoke %tmp.40 %tmp.41(%tmp.42, %tmp.43);
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 67 8 ]
-        %tmp.45 = getv ? :Application;
-        %tmp.46 = getv %tmp.45 :Properties;
-        %tmp.47 = getv function %tmp.46 :setValue;
-        %tmp.48 = "firstRun";
-        %tmp.49 = true;
-        invoke %tmp.46 %tmp.47(%tmp.48, %tmp.49);
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_60_54_68_4_stop:
-        goto @_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_60_4_68_4_if_end;
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_60_4_68_4_if_end:
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_59_35_69_0_stop:
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 114 12 ]
+        %tmp.26 = getm $.Toybox.Application.Properties;
+        %tmp.27 = getv function %tmp.26 :setValue;
+        %tmp.28 = "gradient";
+        %tmp.29 = 0.0;
+        invoke %tmp.26 %tmp.27(%tmp.28, %tmp.29);
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 115 12 ]
+        %tmp.30 = getm $.Toybox.Application.Properties;
+        %tmp.31 = getv function %tmp.30 :setValue;
+        %tmp.32 = "firstRun";
+        %tmp.33 = true;
+        invoke %tmp.30 %tmp.31(%tmp.32, %tmp.33);
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_108_46_116_8_stop:
+        goto @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_108_8_116_8_if_end;
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_108_8_116_8_if_end:
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_107_8_117_4_stop:
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_107_4_119_4_endTry:
+        jsr @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_107_4_119_4_finally;
+        goto @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_107_4_119_4_end;
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_107_4_119_4_catch:
+        %tmp.34 = exception;
+        push %tmp.34;
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 117 6 ]
+        [ "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_107_4_119_4_catch" "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_117_6_119_4_end" ]
+        %e.1 = local;
+        %tmp.35 = dup %tmp.34;
+        lputv %e.1 %tmp.35;
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_117_16_119_4_start:
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 118 8 ]
+        %tmp.36 = getm $.Toybox.System;
+        %tmp.37 = getv function %tmp.36 :println;
+        %tmp.38 = "Error initializing from profile: ";
+        %tmp.40 = lgetv %e.1;
+        %tmp.41 = add %tmp.38 %tmp.40;
+        invoke %tmp.36 %tmp.37(%tmp.41);
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_117_16_119_4_stop:
+        jsr @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_107_4_119_4_finally;
+        pop;
+        goto @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_107_4_119_4_end;
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_117_6_119_4_end:
+        try @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_107_4_119_4_catch @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_117_6_119_4_end @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_117_6_119_4_end @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_107_4_119_4_finally;
+        jsr @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_107_4_119_4_finally;
+        throw %tmp.34;
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_107_4_119_4_finally:
+        jsrret;
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_107_4_119_4_end:
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_106_35_120_0_stop:
     }
-    [ @file = "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 72; ]
+    [ @file = "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 123; ]
     function checkProfileUpdates() {
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_72_35_97_4_start:
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 73 8 ]
-        [ "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_72_35_97_4_start" "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_72_35_97_4_stop" ]
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_123_35_148_4_start:
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 124 8 ]
+        [ "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_123_35_148_4_start" "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_123_35_148_4_stop" ]
         %profile.1 = local;
         %tmp.1 = getm $.Toybox.UserProfile;
         %tmp.2 = getv function %tmp.1 :getProfile;
         %tmp.3 = invoke %tmp.1 %tmp.2();
         lputv %profile.1 %tmp.3;
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 74 8 ]
-        [ "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_72_35_97_4_start" "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_72_35_97_4_stop" ]
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 125 8 ]
+        [ "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_123_35_148_4_start" "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_123_35_148_4_stop" ]
         %settingsChanged.2 = local;
         %tmp.4 = false;
         lputv %settingsChanged.2 %tmp.4;
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 76 8 ]
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_76_8_83_8_if_stmt:
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 127 8 ]
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_127_8_134_8_if_stmt:
         %tmp.5 = lgetv %profile.1;
         %tmp.6 = getv %tmp.5 :weight;
         %tmp.7 = null;
         %tmp.8 = ne %tmp.6 %tmp.7;
-        bf %tmp.8 @_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_76_8_83_8_if_end;
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_76_8_83_8_if_true:
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_76_36_83_8_start:
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 77 12 ]
-        [ "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_76_36_83_8_start" "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_76_36_83_8_stop" ]
+        bf %tmp.8 @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_127_8_134_8_if_end;
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_127_8_134_8_if_true:
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_127_36_134_8_start:
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 128 12 ]
+        [ "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_127_36_134_8_start" "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_127_36_134_8_stop" ]
         %newWeight.3 = local;
         %tmp.9 = lgetv %profile.1;
         %tmp.10 = getv %tmp.9 :weight;
         %tmp.11 = 1000.0;
         %tmp.12 = div %tmp.10 %tmp.11;
         lputv %newWeight.3 %tmp.12;
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 79 12 ]
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_79_12_82_12_if_stmt:
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 130 12 ]
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_130_12_133_12_if_stmt:
         %tmp.14 = lgetv %newWeight.3;
         %tmp.16 = getv ? :settings;
         %tmp.17 = "weight";
@@ -238,41 +370,41 @@ _Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc
         %tmp.21 = invoke %tmp.19 %tmp.20();
         %tmp.22 = 0.1;
         %tmp.23 = gt %tmp.21 %tmp.22;
-        bf %tmp.23 @_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_79_12_82_12_if_end;
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_79_12_82_12_if_true:
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_79_62_82_12_start:
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 80 16 ]
+        bf %tmp.23 @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_130_12_133_12_if_end;
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_130_12_133_12_if_true:
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_130_62_133_12_start:
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 131 16 ]
         %tmp.24 = getm $.Toybox.Application.Properties;
         %tmp.25 = getv function %tmp.24 :setValue;
         %tmp.26 = "userWeight";
         %tmp.28 = lgetv %newWeight.3;
         invoke %tmp.24 %tmp.25(%tmp.26, %tmp.28);
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 81 16 ]
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 132 16 ]
         %tmp.29 = true;
         lputv %settingsChanged.2 %tmp.29;
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_79_62_82_12_stop:
-        goto @_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_79_12_82_12_if_end;
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_79_12_82_12_if_end:
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_76_36_83_8_stop:
-        goto @_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_76_8_83_8_if_end;
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_76_8_83_8_if_end:
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 85 8 ]
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_85_8_92_8_if_stmt:
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_130_62_133_12_stop:
+        goto @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_130_12_133_12_if_end;
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_130_12_133_12_if_end:
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_127_36_134_8_stop:
+        goto @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_127_8_134_8_if_end;
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_127_8_134_8_if_end:
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 136 8 ]
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_136_8_143_8_if_stmt:
         %tmp.30 = lgetv %profile.1;
         %tmp.31 = getv %tmp.30 :height;
         %tmp.32 = null;
         %tmp.33 = ne %tmp.31 %tmp.32;
-        bf %tmp.33 @_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_85_8_92_8_if_end;
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_85_8_92_8_if_true:
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_85_36_92_8_start:
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 86 12 ]
-        [ "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_85_36_92_8_start" "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_85_36_92_8_stop" ]
+        bf %tmp.33 @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_136_8_143_8_if_end;
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_136_8_143_8_if_true:
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_136_36_143_8_start:
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 137 12 ]
+        [ "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_136_36_143_8_start" "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_136_36_143_8_stop" ]
         %newHeight.4 = local;
         %tmp.34 = lgetv %profile.1;
         %tmp.35 = getv %tmp.34 :height;
         lputv %newHeight.4 %tmp.35;
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 88 12 ]
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_88_12_91_12_if_stmt:
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 139 12 ]
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_139_12_142_12_if_stmt:
         %tmp.37 = lgetv %newHeight.4;
         %tmp.39 = getv ? :settings;
         %tmp.40 = "height";
@@ -282,43 +414,43 @@ _Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc
         %tmp.44 = invoke %tmp.42 %tmp.43();
         %tmp.45 = 0.1;
         %tmp.46 = gt %tmp.44 %tmp.45;
-        bf %tmp.46 @_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_88_12_91_12_if_end;
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_88_12_91_12_if_true:
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_88_62_91_12_start:
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 89 16 ]
+        bf %tmp.46 @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_139_12_142_12_if_end;
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_139_12_142_12_if_true:
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_139_62_142_12_start:
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 140 16 ]
         %tmp.47 = getm $.Toybox.Application.Properties;
         %tmp.48 = getv function %tmp.47 :setValue;
         %tmp.49 = "userHeight";
         %tmp.51 = lgetv %newHeight.4;
         invoke %tmp.47 %tmp.48(%tmp.49, %tmp.51);
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 90 16 ]
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 141 16 ]
         %tmp.52 = true;
         lputv %settingsChanged.2 %tmp.52;
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_88_62_91_12_stop:
-        goto @_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_88_12_91_12_if_end;
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_88_12_91_12_if_end:
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_85_36_92_8_stop:
-        goto @_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_85_8_92_8_if_end;
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_85_8_92_8_if_end:
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 94 8 ]
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_94_8_96_8_if_stmt:
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_139_62_142_12_stop:
+        goto @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_139_12_142_12_if_end;
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_139_12_142_12_if_end:
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_136_36_143_8_stop:
+        goto @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_136_8_143_8_if_end;
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_136_8_143_8_if_end:
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 145 8 ]
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_145_8_147_8_if_stmt:
         %tmp.54 = lgetv %settingsChanged.2;
-        bf %tmp.54 @_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_94_8_96_8_if_end;
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_94_8_96_8_if_true:
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_94_29_96_8_start:
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 95 12 ]
+        bf %tmp.54 @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_145_8_147_8_if_end;
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_145_8_147_8_if_true:
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_145_29_147_8_start:
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 146 12 ]
         %tmp.55 = self;
         %tmp.56 = getv function %tmp.55 :loadSettings;
         invoke %tmp.55 %tmp.56();
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_94_29_96_8_stop:
-        goto @_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_94_8_96_8_if_end;
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_94_8_96_8_if_end:
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_72_35_97_4_stop:
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_145_29_147_8_stop:
+        goto @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_145_8_147_8_if_end;
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_145_8_147_8_if_end:
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_123_35_148_4_stop:
     }
-    [ @file = "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 100; ]
+    [ @file = "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 151; ]
     function loadSettings() {
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_100_28_109_4_start:
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 101 8 ]
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_151_28_160_4_start:
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 152 8 ]
         %tmp.1 = newd 6;
         %tmp.2 = "weight";
         %tmp.3 = getm $.Toybox.Application.Properties;
@@ -363,12 +495,12 @@ _Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc
         %tmp.42 = dup %tmp.36;
         %tmp.43 = aputv %tmp.42 %tmp.37 %tmp.41;
         putv self :settings %tmp.43;
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_100_28_109_4_stop:
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_151_28_160_4_stop:
     }
-    [ @file = "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 112; ]
+    [ @file = "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 163; ]
     function getTotalMass() {
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_112_28_114_4_start:
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 113 8 ]
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_163_28_165_4_start:
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 164 8 ]
         %tmp.2 = getv ? :settings;
         %tmp.3 = "weight";
         %tmp.4 = agetv %tmp.2 %tmp.3;
@@ -379,13 +511,13 @@ _Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc
         %tmp.10 = getv function %tmp.9 :toFloat;
         %tmp.11 = invoke %tmp.9 %tmp.10();
         ret %tmp.11;
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_112_28_114_4_stop:
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_163_28_165_4_stop:
     }
-    [ @file = "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 117; ]
+    [ @file = "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 168; ]
     function getFrontalArea() {
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_117_30_122_4_start:
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 118 8 ]
-        [ "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_117_30_122_4_start" "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_117_30_122_4_stop" ]
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_168_30_173_4_start:
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 169 8 ]
+        [ "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_168_30_173_4_start" "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_168_30_173_4_stop" ]
         %heightM.1 = local;
         %tmp.2 = getv ? :settings;
         %tmp.3 = "height";
@@ -393,8 +525,8 @@ _Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc
         %tmp.5 = 100.0;
         %tmp.6 = div %tmp.4 %tmp.5;
         lputv %heightM.1 %tmp.6;
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 119 8 ]
-        [ "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_117_30_122_4_start" "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_117_30_122_4_stop" ]
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 170 8 ]
+        [ "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_168_30_173_4_start" "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_168_30_173_4_stop" ]
         %baseArea.2 = local;
         %tmp.7 = 0.0276;
         %tmp.8 = getm $.Toybox.Math;
@@ -412,8 +544,8 @@ _Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc
         %tmp.22 = invoke %tmp.15 %tmp.16(%tmp.20, %tmp.21);
         %tmp.23 = mul %tmp.14 %tmp.22;
         lputv %baseArea.2 %tmp.23;
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 120 8 ]
-        [ "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_117_30_122_4_start" "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_117_30_122_4_stop" ]
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 171 8 ]
+        [ "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_168_30_173_4_start" "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_168_30_173_4_stop" ]
         %bikeProfile.3 = local;
         %tmp.25 = getv ? :bikeProfiles;
         %tmp.27 = getv ? :settings;
@@ -421,20 +553,20 @@ _Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc
         %tmp.29 = agetv %tmp.27 %tmp.28;
         %tmp.30 = agetv %tmp.25 %tmp.29;
         lputv %bikeProfile.3 %tmp.30;
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 121 8 ]
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 172 8 ]
         %tmp.32 = lgetv %baseArea.2;
         %tmp.34 = lgetv %bikeProfile.3;
         %tmp.35 = "dragCoefficient";
         %tmp.36 = agetv %tmp.34 %tmp.35;
         %tmp.37 = mul %tmp.32 %tmp.36;
         ret %tmp.37;
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_117_30_122_4_stop:
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_168_30_173_4_stop:
     }
-    [ @file = "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 125; ]
+    [ @file = "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 176; ]
     function getWheelInertia() {
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_125_31_132_4_start:
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 126 8 ]
-        [ "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_125_31_132_4_start" "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_125_31_132_4_stop" ]
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_176_31_183_4_start:
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 177 8 ]
+        [ "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_176_31_183_4_start" "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_176_31_183_4_stop" ]
         %wheelsetFactors.1 = local;
         %tmp.1 = newd 3;
         %tmp.2 = "light";
@@ -450,48 +582,48 @@ _Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc
         %tmp.12 = dup %tmp.9;
         %tmp.13 = aputv %tmp.12 %tmp.10 %tmp.11;
         lputv %wheelsetFactors.1 %tmp.13;
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 131 8 ]
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 182 8 ]
         %tmp.15 = lgetv %wheelsetFactors.1;
         %tmp.17 = getv ? :settings;
         %tmp.18 = "wheelset";
         %tmp.19 = agetv %tmp.17 %tmp.18;
         %tmp.20 = agetv %tmp.15 %tmp.19;
         ret %tmp.20;
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_125_31_132_4_stop:
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_176_31_183_4_stop:
     }
-    [ @file = "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 135; ]
+    [ @file = "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 186; ]
     function calculateSpeed(power, cadence) {
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_135_44_179_4_start:
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 136 8 ]
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_136_8_139_8_if_stmt:
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_136_12_136_37_begin:
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_186_44_230_4_start:
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 187 8 ]
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_187_8_190_8_if_stmt:
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_187_12_187_37_begin:
         %tmp.2 = lgetv %power;
         %tmp.3 = 0;
         %tmp.4 = lte %tmp.2 %tmp.3;
-        bt %tmp.4 @_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_136_8_139_8_if_true;
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_136_26_136_37_false:
+        bt %tmp.4 @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_187_8_190_8_if_true;
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_187_26_187_37_false:
         %tmp.6 = lgetv %cadence;
         %tmp.7 = 0;
         %tmp.8 = lte %tmp.6 %tmp.7;
         push %tmp.8;
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_136_26_136_37_end:
-        %tmp.9 = phi [%tmp.4 @_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_136_12_136_37_begin] [%tmp.8 @_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_136_26_136_37_false] [%tmp.9 @_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_136_26_136_37_end];
-        bf %tmp.9 @_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_136_8_139_8_if_end;
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_136_8_139_8_if_true:
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_136_40_139_8_start:
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 137 12 ]
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_187_26_187_37_end:
+        %tmp.9 = phi [%tmp.4 @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_187_12_187_37_begin] [%tmp.8 @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_187_26_187_37_false] [%tmp.9 @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_187_26_187_37_end];
+        bf %tmp.9 @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_187_8_190_8_if_end;
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_187_8_190_8_if_true:
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_187_40_190_8_start:
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 188 12 ]
         %tmp.10 = getv self :currentSpeed;
         %tmp.11 = 0.95;
         %tmp.12 = mul %tmp.10 %tmp.11;
         putv self :currentSpeed dup %tmp.12;
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 138 12 ]
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 189 12 ]
         %tmp.14 = getv ? :currentSpeed;
         ret %tmp.14;
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_136_40_139_8_stop:
-        goto @_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_136_8_139_8_if_end;
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_136_8_139_8_if_end:
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 141 8 ]
-        [ "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_135_44_179_4_start" "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_135_44_179_4_stop" ]
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_187_40_190_8_stop:
+        goto @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_187_8_190_8_if_end;
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_187_8_190_8_if_end:
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 192 8 ]
+        [ "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_186_44_230_4_start" "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_186_44_230_4_stop" ]
         %bikeProfile.1 = local;
         %tmp.16 = getv ? :bikeProfiles;
         %tmp.18 = getv ? :settings;
@@ -499,29 +631,29 @@ _Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc
         %tmp.20 = agetv %tmp.18 %tmp.19;
         %tmp.21 = agetv %tmp.16 %tmp.20;
         lputv %bikeProfile.1 %tmp.21;
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 142 8 ]
-        [ "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_135_44_179_4_start" "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_135_44_179_4_stop" ]
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 193 8 ]
+        [ "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_186_44_230_4_start" "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_186_44_230_4_stop" ]
         %totalMass.2 = local;
         %tmp.22 = self;
         %tmp.23 = getv function %tmp.22 :getTotalMass;
         %tmp.24 = invoke %tmp.22 %tmp.23();
         lputv %totalMass.2 %tmp.24;
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 143 8 ]
-        [ "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_135_44_179_4_start" "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_135_44_179_4_stop" ]
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 194 8 ]
+        [ "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_186_44_230_4_start" "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_186_44_230_4_stop" ]
         %frontalArea.3 = local;
         %tmp.25 = self;
         %tmp.26 = getv function %tmp.25 :getFrontalArea;
         %tmp.27 = invoke %tmp.25 %tmp.26();
         lputv %frontalArea.3 %tmp.27;
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 144 8 ]
-        [ "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_135_44_179_4_start" "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_135_44_179_4_stop" ]
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 195 8 ]
+        [ "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_186_44_230_4_start" "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_186_44_230_4_stop" ]
         %wheelInertia.4 = local;
         %tmp.28 = self;
         %tmp.29 = getv function %tmp.28 :getWheelInertia;
         %tmp.30 = invoke %tmp.28 %tmp.29();
         lputv %wheelInertia.4 %tmp.30;
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 147 8 ]
-        [ "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_135_44_179_4_start" "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_135_44_179_4_stop" ]
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 198 8 ]
+        [ "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_186_44_230_4_start" "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_186_44_230_4_stop" ]
         %gradientRad.5 = local;
         %tmp.31 = getm $.Toybox.Math;
         %tmp.32 = getv function %tmp.31 :atan;
@@ -532,8 +664,8 @@ _Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc
         %tmp.38 = div %tmp.36 %tmp.37;
         %tmp.39 = invoke %tmp.31 %tmp.32(%tmp.38);
         lputv %gradientRad.5 %tmp.39;
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 150 8 ]
-        [ "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_135_44_179_4_start" "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_135_44_179_4_stop" ]
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 201 8 ]
+        [ "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_186_44_230_4_start" "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_186_44_230_4_stop" ]
         %gravityForce.6 = local;
         %tmp.41 = lgetv %totalMass.2;
         %tmp.43 = getv ? :GRAVITY;
@@ -544,8 +676,8 @@ _Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc
         %tmp.49 = invoke %tmp.45 %tmp.46(%tmp.48);
         %tmp.50 = mul %tmp.44 %tmp.49;
         lputv %gravityForce.6 %tmp.50;
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 151 8 ]
-        [ "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_135_44_179_4_start" "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_135_44_179_4_stop" ]
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 202 8 ]
+        [ "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_186_44_230_4_start" "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_186_44_230_4_stop" ]
         %normalForce.7 = local;
         %tmp.52 = lgetv %totalMass.2;
         %tmp.54 = getv ? :GRAVITY;
@@ -556,39 +688,39 @@ _Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc
         %tmp.60 = invoke %tmp.56 %tmp.57(%tmp.59);
         %tmp.61 = mul %tmp.55 %tmp.60;
         lputv %normalForce.7 %tmp.61;
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 152 8 ]
-        [ "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_135_44_179_4_start" "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_135_44_179_4_stop" ]
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 203 8 ]
+        [ "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_186_44_230_4_start" "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_186_44_230_4_stop" ]
         %rollingResistance.8 = local;
         %tmp.63 = getv ? :ROLLING_COEFFICIENT;
         %tmp.65 = lgetv %normalForce.7;
         %tmp.66 = mul %tmp.63 %tmp.65;
         lputv %rollingResistance.8 %tmp.66;
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 155 8 ]
-        [ "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_135_44_179_4_start" "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_135_44_179_4_stop" ]
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 206 8 ]
+        [ "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_186_44_230_4_start" "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_186_44_230_4_stop" ]
         %testSpeed.9 = local;
         %tmp.68 = getv ? :currentSpeed;
         lputv %testSpeed.9 %tmp.68;
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 156 8 ]
-        [ "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_135_44_179_4_start" "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_135_44_179_4_stop" ]
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 207 8 ]
+        [ "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_186_44_230_4_start" "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_186_44_230_4_stop" ]
         %iterations.10 = local;
         %tmp.69 = 5;
         lputv %iterations.10 %tmp.69;
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 158 8 ]
-        for @_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_158_8_164_8_for_test @_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_158_8_164_8_for_incr @_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_158_8_164_8_for_end;
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_158_8_164_8_for_init:
-        [ "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_158_8_164_8_for_begin" "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_158_8_164_8_for_end" ]
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 209 8 ]
+        for @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_209_8_215_8_for_test @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_209_8_215_8_for_incr @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_209_8_215_8_for_end;
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_209_8_215_8_for_init:
+        [ "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_209_8_215_8_for_begin" "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_209_8_215_8_for_end" ]
         %i.11 = local;
         %tmp.70 = 0;
         lputv %i.11 %tmp.70;
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_158_8_164_8_for_test:
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_209_8_215_8_for_test:
         %tmp.72 = lgetv %i.11;
         %tmp.74 = lgetv %iterations.10;
         %tmp.75 = lt %tmp.72 %tmp.74;
-        bf %tmp.75 @_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_158_8_164_8_for_end;
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_158_8_164_8_for_begin:
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_158_45_164_8_start:
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 159 12 ]
-        [ "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_158_45_164_8_start" "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_158_45_164_8_stop" ]
+        bf %tmp.75 @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_209_8_215_8_for_end;
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_209_8_215_8_for_begin:
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_209_45_215_8_start:
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 210 12 ]
+        [ "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_209_45_215_8_start" "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_209_45_215_8_stop" ]
         %airResistance.12 = local;
         %tmp.76 = 0.5;
         %tmp.78 = getv ? :AIR_DENSITY;
@@ -600,8 +732,8 @@ _Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc
         %tmp.87 = lgetv %testSpeed.9;
         %tmp.88 = mul %tmp.85 %tmp.87;
         lputv %airResistance.12 %tmp.88;
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 160 12 ]
-        [ "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_158_45_164_8_start" "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_158_45_164_8_stop" ]
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 211 12 ]
+        [ "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_209_45_215_8_start" "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_209_45_215_8_stop" ]
         %totalResistance.13 = local;
         %tmp.90 = lgetv %airResistance.12;
         %tmp.92 = lgetv %rollingResistance.8;
@@ -609,8 +741,8 @@ _Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc
         %tmp.95 = lgetv %gravityForce.6;
         %tmp.96 = add %tmp.93 %tmp.95;
         lputv %totalResistance.13 %tmp.96;
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 161 12 ]
-        [ "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_158_45_164_8_start" "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_158_45_164_8_stop" ]
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 212 12 ]
+        [ "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_209_45_215_8_start" "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_209_45_215_8_stop" ]
         %powerAtWheel.14 = local;
         %tmp.98 = lgetv %power;
         %tmp.100 = lgetv %bikeProfile.1;
@@ -618,8 +750,8 @@ _Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc
         %tmp.102 = agetv %tmp.100 %tmp.101;
         %tmp.103 = mul %tmp.98 %tmp.102;
         lputv %powerAtWheel.14 %tmp.103;
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 162 12 ]
-        [ "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_158_45_164_8_start" "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_158_45_164_8_stop" ]
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 213 12 ]
+        [ "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_209_45_215_8_start" "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_209_45_215_8_stop" ]
         %newSpeed.15 = local;
         %tmp.105 = lgetv %powerAtWheel.14;
         %tmp.107 = lgetv %totalResistance.13;
@@ -627,7 +759,7 @@ _Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc
         %tmp.109 = getv function %tmp.108 :toFloat;
         %tmp.110 = invoke %tmp.108 %tmp.109();
         lputv %newSpeed.15 %tmp.110;
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 163 12 ]
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 214 12 ]
         %tmp.112 = lgetv %testSpeed.9;
         %tmp.113 = 0.7;
         %tmp.114 = mul %tmp.112 %tmp.113;
@@ -638,16 +770,16 @@ _Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc
         %tmp.120 = getv function %tmp.119 :toFloat;
         %tmp.121 = invoke %tmp.119 %tmp.120();
         lputv %testSpeed.9 %tmp.121;
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_158_45_164_8_stop:
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_158_8_164_8_for_incr:
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 158 ]
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_209_45_215_8_stop:
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_209_8_215_8_for_incr:
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 209 ]
         %tmp.124 = lgetv %i.11;
         %tmp.125 = add %tmp.124 1;
         lputv %i.11 %tmp.125;
-        goto @_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_158_8_164_8_for_test;
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_158_8_164_8_for_end:
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 167 8 ]
-        [ "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_135_44_179_4_start" "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_135_44_179_4_stop" ]
+        goto @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_209_8_215_8_for_test;
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_209_8_215_8_for_end:
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 218 8 ]
+        [ "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_186_44_230_4_start" "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_186_44_230_4_stop" ]
         %cadenceFactor.16 = local;
         %tmp.126 = 1.0;
         %tmp.128 = lgetv %cadence;
@@ -657,13 +789,13 @@ _Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc
         %tmp.132 = mul %tmp.130 %tmp.131;
         %tmp.133 = add %tmp.126 %tmp.132;
         lputv %cadenceFactor.16 %tmp.133;
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 168 8 ]
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 219 8 ]
         %tmp.134 = lgetv %testSpeed.9;
         %tmp.136 = lgetv %cadenceFactor.16;
         %tmp.137 = mul %tmp.134 %tmp.136;
         lputv %testSpeed.9 %tmp.137;
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 171 8 ]
-        [ "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_135_44_179_4_start" "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_135_44_179_4_stop" ]
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 222 8 ]
+        [ "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_186_44_230_4_start" "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_186_44_230_4_stop" ]
         %randomValue.17 = local;
         %tmp.138 = getm $.Toybox.Math;
         %tmp.139 = getv function %tmp.138 :rand;
@@ -673,8 +805,8 @@ _Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc
         %tmp.143 = 20;
         %tmp.144 = sub %tmp.142 %tmp.143;
         lputv %randomValue.17 %tmp.144;
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 172 8 ]
-        [ "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_135_44_179_4_start" "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_135_44_179_4_stop" ]
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 223 8 ]
+        [ "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_186_44_230_4_start" "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_186_44_230_4_stop" ]
         %randomFactor.18 = local;
         %tmp.145 = 1.0;
         %tmp.147 = lgetv %randomValue.17;
@@ -684,12 +816,12 @@ _Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc
         %tmp.151 = getv function %tmp.150 :toFloat;
         %tmp.152 = invoke %tmp.150 %tmp.151();
         lputv %randomFactor.18 %tmp.152;
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 173 8 ]
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 224 8 ]
         %tmp.153 = lgetv %testSpeed.9;
         %tmp.155 = lgetv %randomFactor.18;
         %tmp.156 = mul %tmp.153 %tmp.155;
         lputv %testSpeed.9 %tmp.156;
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 176 8 ]
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 227 8 ]
         %tmp.158 = getv ? :currentSpeed;
         %tmp.159 = 0.8;
         %tmp.160 = mul %tmp.158 %tmp.159;
@@ -700,25 +832,25 @@ _Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc
         %tmp.166 = getv function %tmp.165 :toFloat;
         %tmp.167 = invoke %tmp.165 %tmp.166();
         putv self :currentSpeed %tmp.167;
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 178 8 ]
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 229 8 ]
         %tmp.169 = getv ? :currentSpeed;
         ret %tmp.169;
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_135_44_179_4_stop:
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_186_44_230_4_stop:
     }
-    [ @file = "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 182; ]
+    [ @file = "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 233; ]
     function compute(info) {
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_182_27_221_4_start:
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 184 8 ]
-        [ "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_182_27_221_4_start" "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_182_27_221_4_stop" ]
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_233_27_272_4_start:
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 235 8 ]
+        [ "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_233_27_272_4_start" "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_233_27_272_4_stop" ]
         %isGpsEnabled.1 = local;
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_184_27_185_82_begin:
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_184_28_184_67_begin:
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_235_27_236_82_begin:
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_235_28_235_67_begin:
         %tmp.2 = lgetv %info;
         %tmp.4 = const :position;
         %tmp.5 = canhazplz %tmp.2 %tmp.4;
         %tmp.6 = dup %tmp.5;
-        bf %tmp.6 @_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_184_50_184_67_end;
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_184_50_184_67_true:
+        bf %tmp.6 @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_235_50_235_67_end;
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_235_50_235_67_true:
         %tmp.7 = lgetv %info;
         %tmp.8 = as %tmp.7 { (interface { var position; }) };
         %tmp.9 = getv %tmp.8 :position;
@@ -726,18 +858,18 @@ _Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc
         %tmp.11 = ne %tmp.9 %tmp.10;
         %tmp.12 = and %tmp.5 %tmp.11;
         push %tmp.12;
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_184_50_184_67_end:
-        %tmp.13 = phi [%tmp.6 @_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_184_28_184_67_begin] [%tmp.12 @_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_184_50_184_67_true] [%tmp.13 @_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_184_50_184_67_end];
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_235_50_235_67_end:
+        %tmp.13 = phi [%tmp.6 @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_235_28_235_67_begin] [%tmp.12 @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_235_50_235_67_true] [%tmp.13 @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_235_50_235_67_end];
         %tmp.14 = dup %tmp.13;
-        bt %tmp.14 @_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_185_24_185_82_end;
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_185_24_185_82_false:
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_185_25_185_78_begin:
+        bt %tmp.14 @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_236_24_236_82_end;
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_236_24_236_82_false:
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_236_25_236_78_begin:
         %tmp.16 = lgetv %info;
         %tmp.18 = const :currentLocation;
         %tmp.19 = canhazplz %tmp.16 %tmp.18;
         %tmp.20 = dup %tmp.19;
-        bf %tmp.20 @_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_185_54_185_78_end;
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_185_54_185_78_true:
+        bf %tmp.20 @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_236_54_236_78_end;
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_236_54_236_78_true:
         %tmp.21 = lgetv %info;
         %tmp.22 = as %tmp.21 { (interface { var currentLocation; }) };
         %tmp.23 = getv %tmp.22 :currentLocation;
@@ -745,50 +877,50 @@ _Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc
         %tmp.25 = ne %tmp.23 %tmp.24;
         %tmp.26 = and %tmp.19 %tmp.25;
         push %tmp.26;
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_185_54_185_78_end:
-        %tmp.27 = phi [%tmp.20 @_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_185_25_185_78_begin] [%tmp.26 @_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_185_54_185_78_true] [%tmp.27 @_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_185_54_185_78_end];
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_236_54_236_78_end:
+        %tmp.27 = phi [%tmp.20 @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_236_25_236_78_begin] [%tmp.26 @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_236_54_236_78_true] [%tmp.27 @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_236_54_236_78_end];
         %tmp.28 = or %tmp.13 %tmp.27;
         push %tmp.28;
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_185_24_185_82_end:
-        %tmp.29 = phi [%tmp.14 @_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_184_27_185_82_begin] [%tmp.28 @_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_185_24_185_82_false] [%tmp.29 @_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_185_24_185_82_end];
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_236_24_236_82_end:
+        %tmp.29 = phi [%tmp.14 @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_235_27_236_82_begin] [%tmp.28 @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_236_24_236_82_false] [%tmp.29 @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_236_24_236_82_end];
         lputv %isGpsEnabled.1 %tmp.29;
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 188 8 ]
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 239 8 ]
         %tmp.30 = getm $.Toybox.System;
         %tmp.31 = getv function %tmp.30 :println;
         %tmp.32 = "GPS Status - Enabled: ";
         %tmp.34 = lgetv %isGpsEnabled.1;
         %tmp.35 = add %tmp.32 %tmp.34;
         invoke %tmp.30 %tmp.31(%tmp.35);
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 191 8 ]
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_191_8_194_8_if_stmt:
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 242 8 ]
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_242_8_245_8_if_stmt:
         %tmp.37 = lgetv %isGpsEnabled.1;
-        bf %tmp.37 @_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_191_8_194_8_if_end;
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_191_8_194_8_if_true:
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_191_26_194_8_start:
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 192 12 ]
+        bf %tmp.37 @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_242_8_245_8_if_end;
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_242_8_245_8_if_true:
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_242_26_245_8_start:
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 243 12 ]
         %tmp.38 = getm $.Toybox.System;
         %tmp.39 = getv function %tmp.38 :println;
         %tmp.40 = "GPS active - Speed simulation disabled";
         invoke %tmp.38 %tmp.39(%tmp.40);
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 193 12 ]
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 244 12 ]
         %tmp.41 = null;
         ret %tmp.41;
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_191_26_194_8_stop:
-        goto @_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_191_8_194_8_if_end;
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_191_8_194_8_if_end:
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 197 8 ]
-        [ "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_182_27_221_4_start" "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_182_27_221_4_stop" ]
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_242_26_245_8_stop:
+        goto @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_242_8_245_8_if_end;
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_242_8_245_8_if_end:
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 248 8 ]
+        [ "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_233_27_272_4_start" "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_233_27_272_4_stop" ]
         %power.2 = local;
         %tmp.42 = lgetv %info;
         %tmp.43 = getv %tmp.42 :currentPower;
         lputv %power.2 %tmp.43;
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 198 8 ]
-        [ "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_182_27_221_4_start" "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_182_27_221_4_stop" ]
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 249 8 ]
+        [ "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_233_27_272_4_start" "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_233_27_272_4_stop" ]
         %cadence.3 = local;
         %tmp.44 = lgetv %info;
         %tmp.45 = getv %tmp.44 :currentCadence;
         lputv %cadence.3 %tmp.45;
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 201 8 ]
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 252 8 ]
         %tmp.46 = getm $.Toybox.System;
         %tmp.47 = getv function %tmp.46 :println;
         %tmp.48 = "Sensor Data - Power: ";
@@ -801,25 +933,25 @@ _Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc
         %tmp.57 = "rpm";
         %tmp.58 = add %tmp.56 %tmp.57;
         invoke %tmp.46 %tmp.47(%tmp.58);
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 203 8 ]
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_203_8_217_8_if_stmt:
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_203_12_203_40_begin:
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 254 8 ]
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_254_8_268_8_if_stmt:
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_254_12_254_40_begin:
         %tmp.60 = lgetv %power.2;
         %tmp.61 = null;
         %tmp.62 = ne %tmp.60 %tmp.61;
-        bf %tmp.62 @_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_203_8_217_8_if_end;
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_203_29_203_40_true:
+        bf %tmp.62 @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_254_8_268_8_if_end;
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_254_29_254_40_true:
         %tmp.64 = lgetv %cadence.3;
         %tmp.65 = null;
         %tmp.66 = ne %tmp.64 %tmp.65;
         push %tmp.66;
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_203_29_203_40_end:
-        %tmp.67 = phi [%tmp.62 @_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_203_12_203_40_begin] [%tmp.66 @_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_203_29_203_40_true] [%tmp.67 @_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_203_29_203_40_end];
-        bf %tmp.67 @_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_203_8_217_8_if_end;
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_203_8_217_8_if_true:
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_203_46_217_8_start:
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 204 12 ]
-        [ "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_203_46_217_8_start" "_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_203_46_217_8_stop" ]
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_254_29_254_40_end:
+        %tmp.67 = phi [%tmp.62 @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_254_12_254_40_begin] [%tmp.66 @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_254_29_254_40_true] [%tmp.67 @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_254_29_254_40_end];
+        bf %tmp.67 @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_254_8_268_8_if_end;
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_254_8_268_8_if_true:
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_254_46_268_8_start:
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 255 12 ]
+        [ "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_254_46_268_8_start" "_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_254_46_268_8_stop" ]
         %speed.4 = local;
         %tmp.68 = self;
         %tmp.69 = getv function %tmp.68 :calculateSpeed;
@@ -829,7 +961,7 @@ _Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc
         %tmp.75 = as %tmp.74 { (!Null) };
         %tmp.76 = invoke %tmp.68 %tmp.69(%tmp.72, %tmp.75);
         lputv %speed.4 %tmp.76;
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 207 12 ]
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 258 12 ]
         %tmp.77 = getm $.Toybox.System;
         %tmp.78 = getv function %tmp.77 :println;
         %tmp.79 = "Simulated Speed: ";
@@ -841,53 +973,53 @@ _Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc
         %tmp.85 = "m/s";
         %tmp.86 = add %tmp.84 %tmp.85;
         invoke %tmp.77 %tmp.78(%tmp.86);
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 209 12 ]
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_209_12_214_12_if_stmt:
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 260 12 ]
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_260_12_265_12_if_stmt:
         %tmp.88 = getv ? :speedField;
         %tmp.89 = null;
         %tmp.90 = ne %tmp.88 %tmp.89;
-        bf %tmp.90 @_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_209_12_214_12_if_false;
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_209_12_214_12_if_true:
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_209_36_212_12_start:
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 210 16 ]
+        bf %tmp.90 @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_260_12_265_12_if_false;
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_260_12_265_12_if_true:
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_260_36_263_12_start:
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 261 16 ]
         %tmp.92 = getv ? :speedField;
         %tmp.93 = as %tmp.92 { (!Null) };
         %tmp.94 = getv function %tmp.93 :setData;
         %tmp.96 = lgetv %speed.4;
         invoke %tmp.93 %tmp.94(%tmp.96);
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 211 16 ]
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 262 16 ]
         %tmp.97 = getm $.Toybox.System;
         %tmp.98 = getv function %tmp.97 :println;
         %tmp.99 = "Speed data written to FIT file";
         invoke %tmp.97 %tmp.98(%tmp.99);
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_209_36_212_12_stop:
-        goto @_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_209_12_214_12_if_end;
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_209_12_214_12_if_false:
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_212_19_214_12_start:
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 213 16 ]
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_260_36_263_12_stop:
+        goto @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_260_12_265_12_if_end;
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_260_12_265_12_if_false:
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_263_19_265_12_start:
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 264 16 ]
         %tmp.100 = getm $.Toybox.System;
         %tmp.101 = getv function %tmp.100 :println;
         %tmp.102 = "Warning: speedField is null";
         invoke %tmp.100 %tmp.101(%tmp.102);
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_212_19_214_12_stop:
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_209_12_214_12_if_end:
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 216 12 ]
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_263_19_265_12_stop:
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_260_12_265_12_if_end:
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 267 12 ]
         %tmp.104 = lgetv %speed.4;
         ret %tmp.104;
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_203_46_217_8_stop:
-        goto @_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_203_8_217_8_if_end;
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_203_8_217_8_if_end:
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 219 8 ]
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_254_46_268_8_stop:
+        goto @_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_254_8_268_8_if_end;
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_254_8_268_8_if_end:
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 270 8 ]
         %tmp.105 = getm $.Toybox.System;
         %tmp.106 = getv function %tmp.105 :println;
         %tmp.107 = "No power/cadence data available";
         invoke %tmp.105 %tmp.106(%tmp.107);
-[ "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 220 8 ]
+[ "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc" 271 8 ]
         %tmp.108 = null;
         ret %tmp.108;
-_Users_finnur_Projects_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_182_27_221_4_stop:
+_Users_finnurerlingsson_git_garmin_speed_simulator_source_GarminSpeedSimulatorView_mc_233_27_272_4_stop:
     }
 }
-[ @file = "/Users/finnur/Projects/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 1; ]
+[ @file = "/Users/finnurerlingsson/git/garmin-speed-simulator/source/GarminSpeedSimulatorView.mc"; @line = 1; ]
 <init> {
 }

@@ -1,22 +1,28 @@
 using Toybox.WatchUi;
 using Toybox.System;
+using Toybox.Graphics;
 using Toybox.Sensor;
 using Toybox.Math;
 using Toybox.Application.Properties;
 using Toybox.UserProfile;
 using Toybox.FitContributor;
-using Toybox.ActivityRecording;
+using Toybox.Activity;
 
 // Physics constants
 const GRAVITY = 9.81;              // m/s^2
 const AIR_DENSITY = 1.225;         // kg/m^3 at sea level
 const ROLLING_COEFFICIENT = 0.004;  // typical for road bike tires
-const FIT_SPEED_FIELD_ID = 0;      // Unique identifier for our speed field
+const FIT_SPEED_FIELD_ID = 6;      // Unique identifier for our speed field
+
+// Native field number for speed in the FIT file
+const SPEED_NATIVE_NUM = 6;  // Speed's native field number in the FIT file
+
 
 class GarminSpeedSimulatorView extends WatchUi.DataField {
     var currentSpeed = 0.0f;
     var settings;
-    var speedField;  // FIT Contributor field
+    var speedField; // FIT Contributor field
+    var session;
     
     // Bike profiles with their characteristics
     var bikeProfiles = {
@@ -39,32 +45,77 @@ class GarminSpeedSimulatorView extends WatchUi.DataField {
     
     function initialize() {
         DataField.initialize();
-        //initializeFromProfile();
-        //loadSettings();
+        initializeFromProfile();
+        loadSettings();
         createSpeedField();
+    }
+
+     function onUpdate(dc) {
+        // Clear the background
+        dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_WHITE);
+        dc.clear();
+        
+        // Set text color
+        dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_TRANSPARENT);
+        
+        // Get the display dimensions
+        var width = dc.getWidth();
+        var height = dc.getHeight();
+        
+        // Just pass the raw speed - the system will handle unit conversion
+        if (currentSpeed != null) {
+            dc.drawText(
+                width/2,                    // x position (center)
+                height/2,                   // y position (center)
+                Graphics.FONT_LARGE,        // font size
+                currentSpeed.format("%.1f"),       // text to display
+                Graphics.TEXT_JUSTIFY_CENTER // center alignment
+            );
+        } else {
+            dc.drawText(
+                width/2,
+                height/2,
+                Graphics.FONT_LARGE,
+                "--",
+                Graphics.TEXT_JUSTIFY_CENTER
+            );
+        }
     }
     
     // Create and register the speed field
     function createSpeedField() {
+         // Create speed field that writes to the native speed field
         speedField = createField(
-            "computed_speed",
-            FIT_SPEED_FIELD_ID,
+            "speed",
+            0,
             FitContributor.DATA_TYPE_FLOAT,
             { :mesgType => FitContributor.MESG_TYPE_RECORD,
-              :units => "m/s" }
+              :units => "m/s",
+              :nativeNum => SPEED_NATIVE_NUM }  // This makes it write to the native speed field
         );
+        //speedField = createField(
+        //    "computed_speed",
+        //    FIT_SPEED_FIELD_ID,
+        //    FitContributor.DATA_TYPE_FLOAT,
+        //    { :mesgType => FitContributor.MESG_TYPE_RECORD,
+        //      :units => "m/s" }
+        //);
     }
     
     // Initialize settings from Garmin profile
   function initializeFromProfile() {
-    if (!Application.Properties.getValue("firstRun")) {
-        Application.Properties.setValue("userWeight", 75.0);
-        Application.Properties.setValue("userHeight", 175.0);
-        Application.Properties.setValue("bikeType", "road");
-        Application.Properties.setValue("bikeWeight", 8.0);
-        Application.Properties.setValue("wheelset", "medium");
-        Application.Properties.setValue("gradient", 0.0);
-        Application.Properties.setValue("firstRun", true);
+    try {
+        if (!Properties.getValue("firstRun")) {
+            Properties.setValue("userWeight", 75.0);
+            Properties.setValue("userHeight", 175.0);
+            Properties.setValue("bikeType", "road");
+            Properties.setValue("bikeWeight", 8.0);
+            Properties.setValue("wheelset", "medium");
+            Properties.setValue("gradient", 0.0);
+            Properties.setValue("firstRun", true);
+        }
+    } catch (e) {
+        System.println("Error initializing from profile: " + e);
     }
 }
 
