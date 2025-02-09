@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <properties>
     <property id="firstRun" type="boolean">false</property>
+    <property id="simulatorEnabled" type="boolean">true</property>
     <property id="userWeight" type="float">75.0</property>
     <property id="userHeight" type="float">175.0</property>
     <property id="userGender" type="string">unknown</property>
@@ -9,5 +10,5 @@
     <property id="bikeWeight" type="float">8.0</property>
     <property id="wheelset" type="string">medium</property>
     <property id="gradient" type="float">0.0</property>
-    <property id="userFTP" type="float">225.0</property>
+    <property id="ascentRate" type="float">500.0</property>
 </properties>

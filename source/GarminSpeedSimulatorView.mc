@@ -9,20 +9,21 @@ using Toybox.FitContributor;
 using Toybox.Activity;
 
 // Physics constants
-const GRAVITY = 9.81;              // m/s^2
-const AIR_DENSITY = 1.225;         // kg/m^3 at sea level
+const GRAVITY = 9.81;               // m/s^2
+const AIR_DENSITY = 1.225;          // kg/m^3 at sea level
 const ROLLING_COEFFICIENT = 0.004;  // typical for road bike tires
-const FIT_SPEED_FIELD_ID = 6;      // Unique identifier for our speed field
+const SPEED_NATIVE_NUM = 6;         // Speed's native field number in the FIT file
 
-// Native field number for speed in the FIT file
-const SPEED_NATIVE_NUM = 6;  // Speed's native field number in the FIT file
-
+// Smoothing factors
+const SMOOTHING_FACTOR_OLD = 0.7;
+const SMOOTHING_FACTOR_NEW = 0.3;
 
 class GarminSpeedSimulatorView extends WatchUi.DataField {
     var currentSpeed = 0.0f;
     var settings;
     var speedField; // FIT Contributor field
-    var session;
+    var randomFactor;
+    var runSpeedSimulator = true;
     
     // Bike profiles with their characteristics
     var bikeProfiles = {
@@ -48,9 +49,13 @@ class GarminSpeedSimulatorView extends WatchUi.DataField {
         initializeFromProfile();
         loadSettings();
         createSpeedField();
+
+        // Add random variation (±1%)
+        var randomValue = (Math.rand() % 21) - 10;  // Generate number between -10 and 10
+        randomFactor = (1.0 + randomValue / 1000.0).toFloat();
     }
 
-     function onUpdate(dc) {
+    function onUpdate(dc) {
         // Clear the background
         dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_WHITE);
         dc.clear();
@@ -62,22 +67,43 @@ class GarminSpeedSimulatorView extends WatchUi.DataField {
         var width = dc.getWidth();
         var height = dc.getHeight();
         
-        // Just pass the raw speed - the system will handle unit conversion
-        if (currentSpeed != null) {
+        // Determine if speed simulation is ON or OFF
+        var simulationStatus = runSpeedSimulator ? "ON" : "OFF";
+        var statusColor = runSpeedSimulator ? Graphics.COLOR_GREEN : Graphics.COLOR_RED;
+
+        // Display "Speed simulation" text
+        dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_TRANSPARENT);
+        dc.drawText(
+            width/2,                        // x position (center)
+            height/2 - 50,                  // y position (above center with padding)
+            Graphics.FONT_SMALL,            // smaller font size for "Speed simulation"
+            "Speed simulation",             // text to display
+            Graphics.TEXT_JUSTIFY_CENTER    // center alignment
+        );
+
+        // Display the simulation status
+        dc.setColor(statusColor, Graphics.COLOR_TRANSPARENT);
+        dc.drawText(
+            width/2,                        // x position (center)
+            height/2 - 20,                  // y position (center with padding)
+            Graphics.FONT_LARGE,            // larger font size for ON/OFF
+            simulationStatus,               // text to display
+            Graphics.TEXT_JUSTIFY_CENTER    // center alignment
+        );
+
+        // If simulation is ON and in debug mode, display the current speed
+        if (runSpeedSimulator) {
+            var speedDisplayValue = (System.getDeviceSettings().distanceUnits == System.UNIT_METRIC ? 
+                (currentSpeed * 3.6).format("%.1f") + " km/h" : 
+                (currentSpeed * 2.23694).format("%.1f") + " mph");
+
+            dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_TRANSPARENT);
             dc.drawText(
-                width/2,                    // x position (center)
-                height/2,                   // y position (center)
-                Graphics.FONT_LARGE,        // font size
-                currentSpeed.format("%.1f"),       // text to display
-                Graphics.TEXT_JUSTIFY_CENTER // center alignment
-            );
-        } else {
-            dc.drawText(
-                width/2,
-                height/2,
-                Graphics.FONT_LARGE,
-                "--",
-                Graphics.TEXT_JUSTIFY_CENTER
+                width/2,                        // x position (center)
+                height/2 + 30,                  // y position (below center with padding)
+                Graphics.FONT_MEDIUM,           // same font size as "Speed simulation"
+                speedDisplayValue,              // text to display
+                Graphics.TEXT_JUSTIFY_CENTER    // center alignment
             );
         }
     }
@@ -91,33 +117,28 @@ class GarminSpeedSimulatorView extends WatchUi.DataField {
             FitContributor.DATA_TYPE_FLOAT,
             { :mesgType => FitContributor.MESG_TYPE_RECORD,
               :units => "m/s",
-              :nativeNum => SPEED_NATIVE_NUM }  // This makes it write to the native speed field
+              :nativeNum => SPEED_NATIVE_NUM }  // Write to the native speed field
         );
-        //speedField = createField(
-        //    "computed_speed",
-        //    FIT_SPEED_FIELD_ID,
-        //    FitContributor.DATA_TYPE_FLOAT,
-        //    { :mesgType => FitContributor.MESG_TYPE_RECORD,
-        //      :units => "m/s" }
-        //);
     }
     
     // Initialize settings from Garmin profile
-  function initializeFromProfile() {
-    try {
-        if (!Properties.getValue("firstRun")) {
-            Properties.setValue("userWeight", 75.0);
-            Properties.setValue("userHeight", 175.0);
-            Properties.setValue("bikeType", "road");
-            Properties.setValue("bikeWeight", 8.0);
-            Properties.setValue("wheelset", "medium");
-            Properties.setValue("gradient", 0.0);
-            Properties.setValue("firstRun", true);
+    function initializeFromProfile() {
+        try {
+            if (!Properties.getValue("firstRun")) {
+                Properties.setValue("simulatorEnabled", true);
+                Properties.setValue("userWeight", 75.0);
+                Properties.setValue("userHeight", 175.0);
+                Properties.setValue("bikeType", "road");
+                Properties.setValue("bikeWeight", 8.0);
+                Properties.setValue("wheelset", "medium");
+                Properties.setValue("gradient", 0.0);
+                Properties.setValue("ascentRate", 500.0);
+                Properties.setValue("firstRun", true);
+            }
+        } catch (e) {
+            System.println("Error initializing from : " + e);
         }
-    } catch (e) {
-        System.println("Error initializing from profile: " + e);
     }
-}
 
     // Periodic profile check
     function checkProfileUpdates() {
@@ -126,7 +147,6 @@ class GarminSpeedSimulatorView extends WatchUi.DataField {
         
         if (profile.weight != null) {
             var newWeight = profile.weight / 1000.0;
-            // Replace Math.abs with direct comparison
             if ((newWeight - settings["weight"]).abs() > 0.1) {
                 Properties.setValue("userWeight", newWeight);
                 settingsChanged = true;
@@ -135,7 +155,6 @@ class GarminSpeedSimulatorView extends WatchUi.DataField {
         
         if (profile.height != null) {
             var newHeight = profile.height;
-            // Replace Math.abs with direct comparison
             if ((newHeight - settings["height"]).abs() > 0.1) {
                 Properties.setValue("userHeight", newHeight);
                 settingsChanged = true;
@@ -150,12 +169,14 @@ class GarminSpeedSimulatorView extends WatchUi.DataField {
     // Load current settings
     function loadSettings() {
         settings = {
+            "simulatorEnabled" => Properties.getValue("simulatorEnabled"),
             "weight" => Properties.getValue("userWeight"),
             "height" => Properties.getValue("userHeight"),
             "bikeType" => Properties.getValue("bikeType"),
             "bikeWeight" => Properties.getValue("bikeWeight"),
             "wheelset" => Properties.getValue("wheelset"),
-            "gradient" => Properties.getValue("gradient")
+            "gradient" => Properties.getValue("gradient"),
+            "ascentRate" => Properties.getValue("ascentRate")
         };
     }
     
@@ -167,7 +188,7 @@ class GarminSpeedSimulatorView extends WatchUi.DataField {
     // Calculate frontal area based on height and bike position
     function getFrontalArea() {
         var heightM = settings["height"] / 100.0;
-        var baseArea = 0.0276 * Math.pow(heightM, 0.725) * Math.pow(settings["weight"], 0.425);
+        var baseArea = 0.0233 * Math.pow(heightM, 0.725) * Math.pow(settings["weight"], 0.425);
         var bikeProfile = bikeProfiles[settings["bikeType"]];
         return baseArea * bikeProfile["dragCoefficient"];
     }
@@ -181,11 +202,19 @@ class GarminSpeedSimulatorView extends WatchUi.DataField {
         };
         return wheelsetFactors[settings["wheelset"]];
     }
+
+    // Smooth transition from previous speed to new speed
+    function smoothSpeedTransition(currentSpeed, testSpeed) {
+        return (currentSpeed * SMOOTHING_FACTOR_OLD + testSpeed * SMOOTHING_FACTOR_NEW).toFloat();
+    }
     
     // Main physics calculation
-    function calculateSpeed(power, cadence) {
-        if (power <= 0 || cadence <= 0) {
-            currentSpeed *= 0.95;
+    // Calculate simulated speed with ascent rate variations
+    function calculateSpeed(power, cadence, elapsedTime) {
+        if (power == null || cadence == null || power <= 0 || cadence <= 0) {
+            // Gradually reduce speed to simulate coasting
+            var decelerationFactor = 0.98;
+            currentSpeed *= decelerationFactor;
             return currentSpeed;
         }
         
@@ -194,8 +223,24 @@ class GarminSpeedSimulatorView extends WatchUi.DataField {
         var frontalArea = getFrontalArea();
         var wheelInertia = getWheelInertia();
         
+        // Base gradient from settings
+        var baseGradient = settings["gradient"];
+        
+        // Calculate additional gradient variation based on ascent rate
+        var ascentRate = settings["ascentRate"];  // meters per hour
+        var timeHours = (elapsedTime % 3600) / 3600.0;  // Convert to fraction of hour
+        
+        // Create a sine wave variation based on time
+        var ascentVariation = Math.sin(2.0 * Math.PI * timeHours);
+        
+        // Scale the variation by the ascent rate (convert to gradient percentage)
+        var ascentGradient = (ascentVariation * ascentRate) / 1000.0;
+        
+        // Combine base gradient with ascent variation
+        var effectiveGradient = baseGradient + ascentGradient;
+        
         // Convert gradient to radians
-        var gradientRad = Math.atan(settings["gradient"] / 100.0);
+        var gradientRad = Math.atan(effectiveGradient / 100.0);
         
         // Calculate forces
         var gravityForce = totalMass * GRAVITY * Math.sin(gradientRad);
@@ -210,21 +255,21 @@ class GarminSpeedSimulatorView extends WatchUi.DataField {
             var airResistance = 0.5 * AIR_DENSITY * frontalArea * testSpeed * testSpeed;
             var totalResistance = airResistance + rollingResistance + gravityForce;
             var powerAtWheel = power * bikeProfile["efficiency"];
-            var newSpeed = (powerAtWheel / totalResistance).toFloat();
-            testSpeed = (testSpeed * 0.7 + newSpeed * 0.3).toFloat();
+            
+            // Updated physics equation
+            var newSpeed = Math.sqrt((2.0 * powerAtWheel) / totalResistance).toFloat();
+            testSpeed = (testSpeed * SMOOTHING_FACTOR_OLD + newSpeed * SMOOTHING_FACTOR_NEW).toFloat();
         }
         
-        // Add cadence influence
-        var cadenceFactor = 1.0 + (cadence - 90) * 0.001;
-        testSpeed *= cadenceFactor;
+        // Add cadence influence with reduced factor
+        var cadenceInfluenceFactor = 1.0 + (cadence - 90) * 0.0001;  // Reduced from 0.001
+        testSpeed *= cadenceInfluenceFactor;
         
-        // Add random variation (±2%)
-        var randomValue = Math.rand() % 40 - 20;  // Generate number between -20 and 20
-        var randomFactor = (1.0 + randomValue / 1000.0).toFloat();  // Convert to ±2%
+        // Add random factor to simulate real-world variations
         testSpeed *= randomFactor;
-        
+
         // Smooth transition from previous speed
-        currentSpeed = (currentSpeed * 0.8 + testSpeed * 0.2).toFloat();
+        currentSpeed = smoothSpeedTransition(currentSpeed, testSpeed);
         
         return currentSpeed;
     }
@@ -252,7 +297,8 @@ class GarminSpeedSimulatorView extends WatchUi.DataField {
         System.println("Sensor Data - Power: " + power + "W, Cadence: " + cadence + "rpm");
         
         if (power != null && cadence != null) {
-            var speed = calculateSpeed(power, cadence);
+            var elapsedTime = info.elapsedTime;
+            var speed = calculateSpeed(power, cadence, elapsedTime);
             
             // Debug log calculated speed
             System.println("Simulated Speed: " + speed.format("%.1f") + "m/s");
