@@ -12,18 +12,26 @@ using Toybox.Activity;
 const GRAVITY = 9.81;               // m/s^2
 const AIR_DENSITY = 1.225;          // kg/m^3 at sea level
 const ROLLING_COEFFICIENT = 0.004;  // typical for road bike tires
-const SPEED_NATIVE_NUM = 6;         // Speed's native field number in the FIT file
+// FIT file native field numbers
+const ENHANCED_SPEED_NATIVE_NUM = 73;  // Enhanced speed's native field number
+const DISTANCE_NATIVE_NUM = 5;         // Distance's native field number
+const ASCENT_NATIVE_NUM = 28;          // Ascent's native field number
 
 // Smoothing factors
 const SMOOTHING_FACTOR_OLD = 0.7;
 const SMOOTHING_FACTOR_NEW = 0.3;
 
 class GarminSpeedSimulatorView extends WatchUi.DataField {
-    var currentSpeed = 0.0f;
-    var settings;
-    var speedField; // FIT Contributor field
-    var randomFactor;
-    var runSpeedSimulator = true;
+    hidden var currentSpeed = 0.0f;
+    hidden var totalDistance = 0.0f;
+    hidden var lastComputeTime = null;
+    hidden var settings;
+    hidden var randomFactor;
+    hidden var runSpeedSimulator = true;
+    // FIT Contributor fields
+    hidden var enhancedSpeedField;
+    hidden var distanceField;
+    hidden var ascentField;
     
     // Bike profiles with their characteristics
     var bikeProfiles = {
@@ -48,7 +56,7 @@ class GarminSpeedSimulatorView extends WatchUi.DataField {
         DataField.initialize();
         initializeFromProfile();
         loadSettings();
-        createSpeedField();
+        createFields();
 
         // Add random variation (±1%)
         var randomValue = (Math.rand() % 21) - 10;  // Generate number between -10 and 10
@@ -57,6 +65,7 @@ class GarminSpeedSimulatorView extends WatchUi.DataField {
 
     function onUpdate(dc) {
         // Clear the background
+        var backgroundColor = getBackgroundColor();
         dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_WHITE);
         dc.clear();
         
@@ -76,7 +85,7 @@ class GarminSpeedSimulatorView extends WatchUi.DataField {
         dc.drawText(
             width/2,                        // x position (center)
             height/2 - 60,                  // y position (above center with more padding)
-            Graphics.FONT_SMALL,            // smaller font size for "Speed simulation"
+            Graphics.FONT_TINY,            // smaller font size for "Speed simulation"
             "Speed simulation",             // text to display
             Graphics.TEXT_JUSTIFY_CENTER    // center alignment
         );
@@ -85,7 +94,7 @@ class GarminSpeedSimulatorView extends WatchUi.DataField {
         dc.setColor(statusColor, Graphics.COLOR_TRANSPARENT);
         dc.drawText(
             width/2,                        // x position (center)
-            height/2 - 30,                  // y position (center with more padding)
+            height/2 - 20,                  // y position (center with more padding)
             Graphics.FONT_LARGE,            // larger font size for ON/OFF
             simulationStatus,               // text to display
             Graphics.TEXT_JUSTIFY_CENTER    // center alignment
@@ -109,15 +118,36 @@ class GarminSpeedSimulatorView extends WatchUi.DataField {
     }
     
     // Create and register the speed field
-    function createSpeedField() {
+    function createFields() {
          // Create speed field that writes to the native speed field
-        speedField = createField(
-            "speed",
+        enhancedSpeedField = createField(
+            "enhanced_speed",
             0,
             FitContributor.DATA_TYPE_FLOAT,
             { :mesgType => FitContributor.MESG_TYPE_RECORD,
               :units => "m/s",
-              :nativeNum => SPEED_NATIVE_NUM }  // Write to the native speed field
+              :nativeNum => ENHANCED_SPEED_NATIVE_NUM}  // Write to the native speed field
+              //:isAccumulated => false }  // Ensure the field is not accumulated
+        );
+
+        // Distance field
+        distanceField = createField(
+            "distance",
+            1,
+            FitContributor.DATA_TYPE_FLOAT,
+            { :mesgType => FitContributor.MESG_TYPE_RECORD,
+              :units => "m",
+              :nativeNum => DISTANCE_NATIVE_NUM }
+        );
+
+        // New ascent field
+        ascentField = createField(
+            "ascent",
+            2,  // Different field ID than speed
+            FitContributor.DATA_TYPE_FLOAT,
+            { :mesgType => FitContributor.MESG_TYPE_RECORD,
+            :units => "m",
+            :nativeNum => ASCENT_NATIVE_NUM }
         );
     }
     
@@ -298,20 +328,43 @@ class GarminSpeedSimulatorView extends WatchUi.DataField {
         System.println("Sensor Data - Power: " + power + "W, Cadence: " + cadence + "rpm");
         
         if (power != null && cadence != null) {
-            var elapsedTime = info.elapsedTime;
-            var speed = calculateSpeed(power, cadence, elapsedTime);
+            var elapsedTime = info.elapsedTime != null ? info.elapsedTime : 0;
+            var currentTime = info.timerTime;  // Use timer time for distance calculation
+            
+            currentSpeed = calculateSpeed(power, cadence, elapsedTime);
             
             // Debug log calculated speed
-            System.println("Simulated Speed: " + speed.format("%.1f") + "m/s");
-            
-            if (speedField != null) {
-                speedField.setData(speed);
-                System.println("Speed data written to FIT file");
-            } else {
-                System.println("Warning: speedField is null");
+            System.println("Simulated Speed: " + currentSpeed.format("%.1f") + "m/s");
+
+            // Update distance if we have valid speed and time
+            if (currentSpeed > 0 && currentTime != null) {
+                updateDistance(currentSpeed, currentTime);
             }
             
-            return speed;
+            if (enhancedSpeedField != null) {
+                enhancedSpeedField.setData(currentSpeed);
+                System.println("Speed data written to FIT file");
+            } else {
+                System.println("Warning: enhancedSpeedField is null");
+            }
+
+            if (distanceField != null) {
+                distanceField.setData(totalDistance);
+            } else {
+                System.println("Warning: distanceField is null");
+            }
+
+            // if (ascentField != null) {
+            //     // Calculate ascent based on your gradient and elapsed time
+            //     var elapsedTimeHours = info.elapsedTime / 3600.0;
+            //     var currentAscent = calculateAscent(elapsedTimeHours);
+            //     ascentField.setData(currentAscent);
+            //     System.println("Ascent data written to FIT file");
+            // } else {
+            //     System.println("Warning: ascentField is null");
+            // }
+            
+            return currentSpeed;
         }
         
         System.println("No power/cadence data available");
@@ -341,6 +394,40 @@ class GarminSpeedSimulatorView extends WatchUi.DataField {
             return minSpeed;
         }
         return speed;
+    }
+
+    // Calculate distance traveled since last compute
+    function updateDistance(speed, currentTime) {
+        if (lastComputeTime != null && currentTime != null) {
+            var timeDiff = (currentTime - lastComputeTime).toFloat();
+            // Convert to seconds if in milliseconds
+            if (timeDiff > 1000) {
+                timeDiff = timeDiff / 1000.0;
+            }
+            
+            // Calculate distance (speed * time)
+            var distanceDelta = speed * timeDiff;
+            totalDistance += distanceDelta;
+        }
+        lastComputeTime = currentTime;
+    }
+
+    function calculateAscent(elapsedTimeHours) {
+        // Get base gradient and ascent rate from settings
+        var baseGradient = settings["gradient"];
+        var ascentRate = settings["ascentRate"];  // meters per hour
+        
+        // Calculate time-based variation (same as in calculateSpeed)
+        var timeInHourFraction = (elapsedTimeHours % 1.0);  // Get fractional part of hour
+        var ascentVariation = Math.sin(2.0 * Math.PI * timeInHourFraction);
+        
+        // Calculate ascent rate including variation
+        var effectiveAscentRate = ascentRate * (1.0 + ascentVariation);
+        
+        // Calculate total ascent for this time period
+        var ascent = effectiveAscentRate * elapsedTimeHours;
+        
+        return ascent.toFloat();
     }
 
     // Add bounds checking for gradients

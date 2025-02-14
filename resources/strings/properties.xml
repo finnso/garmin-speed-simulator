@@ -8,5 +8,5 @@
     <property id="bikeWeight" type="float">8.0</property>
     <property id="wheelset" type="string">medium</property>
     <property id="gradient" type="float">0.0</property>
-    <property id="ascentRate" type="float">500.0</property>
+    <property id="ascentRate" type="float">200.0</property>
 </properties>
