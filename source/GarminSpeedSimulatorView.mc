@@ -75,7 +75,7 @@ class GarminSpeedSimulatorView extends WatchUi.DataField {
         dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_TRANSPARENT);
         dc.drawText(
             width/2,                        // x position (center)
-            height/2 - 50,                  // y position (above center with padding)
+            height/2 - 60,                  // y position (above center with more padding)
             Graphics.FONT_SMALL,            // smaller font size for "Speed simulation"
             "Speed simulation",             // text to display
             Graphics.TEXT_JUSTIFY_CENTER    // center alignment
@@ -85,7 +85,7 @@ class GarminSpeedSimulatorView extends WatchUi.DataField {
         dc.setColor(statusColor, Graphics.COLOR_TRANSPARENT);
         dc.drawText(
             width/2,                        // x position (center)
-            height/2 - 20,                  // y position (center with padding)
+            height/2 - 30,                  // y position (center with more padding)
             Graphics.FONT_LARGE,            // larger font size for ON/OFF
             simulationStatus,               // text to display
             Graphics.TEXT_JUSTIFY_CENTER    // center alignment
@@ -94,16 +94,16 @@ class GarminSpeedSimulatorView extends WatchUi.DataField {
         // If simulation is ON and in debug mode, display the current speed
         if (runSpeedSimulator) {
             var speedDisplayValue = (System.getDeviceSettings().distanceUnits == System.UNIT_METRIC ? 
-                (currentSpeed * 3.6).format("%.1f") + " km/h" : 
-                (currentSpeed * 2.23694).format("%.1f") + " mph");
+            (currentSpeed * 3.6).format("%.1f") + " km/h" : 
+            (currentSpeed * 2.23694).format("%.1f") + " mph");
 
             dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_TRANSPARENT);
             dc.drawText(
-                width/2,                        // x position (center)
-                height/2 + 30,                  // y position (below center with padding)
-                Graphics.FONT_MEDIUM,           // same font size as "Speed simulation"
-                speedDisplayValue,              // text to display
-                Graphics.TEXT_JUSTIFY_CENTER    // center alignment
+            width/2,                        // x position (center)
+            height/2 + 40,                  // y position (below center with more padding)
+            Graphics.FONT_MEDIUM,           // same font size as "Speed simulation"
+            speedDisplayValue,              // text to display
+            Graphics.TEXT_JUSTIFY_CENTER    // center alignment
             );
         }
     }
@@ -211,10 +211,8 @@ class GarminSpeedSimulatorView extends WatchUi.DataField {
     // Main physics calculation
     // Calculate simulated speed with ascent rate variations
     function calculateSpeed(power, cadence, elapsedTime) {
-        if (power == null || cadence == null || power <= 0 || cadence <= 0) {
-            // Gradually reduce speed to simulate coasting
-            var decelerationFactor = 0.98;
-            currentSpeed *= decelerationFactor;
+        if (!isValidPower(power) || !isValidCadence(cadence)) {
+            currentSpeed = calculateCoastDownSpeed(currentSpeed, elapsedTime);
             return currentSpeed;
         }
         
@@ -233,11 +231,9 @@ class GarminSpeedSimulatorView extends WatchUi.DataField {
         // Create a sine wave variation based on time
         var ascentVariation = Math.sin(2.0 * Math.PI * timeHours);
         
-        // Scale the variation by the ascent rate (convert to gradient percentage)
         var ascentGradient = (ascentVariation * ascentRate) / 1000.0;
-        
-        // Combine base gradient with ascent variation
-        var effectiveGradient = baseGradient + ascentGradient;
+        // Scale the variation by the ascent rate (convert to gradient percentage)
+        var effectiveGradient = clampGradient(baseGradient + ascentGradient);
         
         // Convert gradient to radians
         var gradientRad = Math.atan(effectiveGradient / 100.0);
@@ -256,8 +252,13 @@ class GarminSpeedSimulatorView extends WatchUi.DataField {
             var totalResistance = airResistance + rollingResistance + gravityForce;
             var powerAtWheel = power * bikeProfile["efficiency"];
             
-            // Updated physics equation
-            var newSpeed = Math.sqrt((2.0 * powerAtWheel) / totalResistance).toFloat();
+            // Add this before the sqrt calculation
+            if (totalResistance <= 0.0) {
+                totalResistance = 0.01;  // Minimum resistance to prevent division by zero
+            }
+            var speedValue = (2.0 * powerAtWheel) / totalResistance;
+            // Ensure we don't take sqrt of negative number
+            var newSpeed = (speedValue > 0) ? Math.sqrt(speedValue).toFloat() : 0.0f;
             testSpeed = (testSpeed * SMOOTHING_FACTOR_OLD + newSpeed * SMOOTHING_FACTOR_NEW).toFloat();
         }
         
@@ -269,7 +270,7 @@ class GarminSpeedSimulatorView extends WatchUi.DataField {
         testSpeed *= randomFactor;
 
         // Smooth transition from previous speed
-        currentSpeed = smoothSpeedTransition(currentSpeed, testSpeed);
+        currentSpeed = clampSpeed(smoothSpeedTransition(currentSpeed, testSpeed));
         
         return currentSpeed;
     }
@@ -315,5 +316,68 @@ class GarminSpeedSimulatorView extends WatchUi.DataField {
         
         System.println("No power/cadence data available");
         return null;
+    }
+
+    function isValidPower(power) {
+        if (power == null || power.toString().equals("NaN")) {
+            return false;
+        }
+        return power > 0 && power < 3000;  // Max realistic power
+    }
+
+    function isValidCadence(cadence) {
+        if (cadence == null || cadence.toString().equals("NaN")) {
+            return false;
+        }
+        return cadence > 0 && cadence < 200;  // Max realistic cadence
+    }
+
+    function clampSpeed(speed) {
+        var maxSpeed = 30.0;  // ~108 km/h, adjust as needed
+        var minSpeed = 0.0;
+        if (speed > maxSpeed) {
+            return maxSpeed;
+        } else if (speed < minSpeed) {
+            return minSpeed;
+        }
+        return speed;
+    }
+
+    // Add bounds checking for gradients
+    function clampGradient(gradient) {
+        var maxGradient = 45.0;  // Maximum realistic gradient
+        var minGradient = -45.0;
+        if (gradient > maxGradient) {
+            return maxGradient;
+        } else if (gradient < minGradient) {
+            return minGradient;
+        }
+        return gradient;
+    }
+
+    function calculateCoastDownSpeed(currentSpeed, elapsedTime) {
+        // Get current forces
+        var totalMass = getTotalMass();
+        var frontalArea = getFrontalArea();
+        
+        // Calculate gradient-based forces
+        var gradientRad = Math.atan(settings["gradient"] / 100.0);
+        var gravityForce = totalMass * GRAVITY * Math.sin(gradientRad);
+        var normalForce = totalMass * GRAVITY * Math.cos(gradientRad);
+        
+        // Calculate resistive forces
+        var rollingResistance = ROLLING_COEFFICIENT * normalForce;
+        var airResistance = 0.5 * AIR_DENSITY * frontalArea * currentSpeed * currentSpeed;
+        var totalResistance = airResistance + rollingResistance + gravityForce;
+        
+        // Calculate deceleration (F = ma, therefore a = F/m)
+        var deceleration = totalResistance / totalMass;
+        
+        // Calculate new speed (v = u + at)
+        // Typical compute cycle is around 1 second
+        var timeStep = 1.0;  // seconds
+        var newSpeed = currentSpeed - (deceleration * timeStep);
+        
+        return (newSpeed > 0) ? newSpeed : 0.0f;
     }
 }

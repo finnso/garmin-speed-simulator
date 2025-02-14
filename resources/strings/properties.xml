@@ -4,8 +4,6 @@
     <property id="simulatorEnabled" type="boolean">true</property>
     <property id="userWeight" type="float">75.0</property>
     <property id="userHeight" type="float">175.0</property>
-    <property id="userGender" type="string">unknown</property>
-    <property id="userAge" type="number">30</property>
     <property id="bikeType" type="string">road</property>
     <property id="bikeWeight" type="float">8.0</property>
     <property id="wheelset" type="string">medium</property>
